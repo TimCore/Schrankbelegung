@@ -9,11 +9,13 @@ public class Locker {
 
     private boolean used = false;           // The locker is used and not available until the user leaves
     private boolean inUse = false;          // somebody currently uses the locker and changes (takes 5 minutes)
+    private boolean changeBefore = false;	// visitor is changing before sports
+    private boolean changeAfter = false;	// visitor is changing after sports
+    private boolean encounterEntry;			//encounter when changing after arrive
+    private boolean encounterLeave;			//encounter when changing before leaving
     private LinkedList<Locker> neighbours;  // List of other Lockers next to this one
     private int timeUsed = 0;
     private int timeTotal = 0;
-    private int visitorCounter = 0;
-    private LinkedList<Integer> encounters;
     private boolean finished = false;
     private int visitorId;
 
@@ -29,20 +31,19 @@ public class Locker {
      * is used every 10 seconds. Checks for encounters and adds them to encounters.
      * Avoids duplicates by searching for encounters only every 5 minutes (300 seconds).
      */
-    public void run(){
+    public boolean run(){
         this.timeUsed += 10;
-        if(timeUsed % 300 == 0){
-            LinkedList<Integer> encos = checkEncounter();
-            while(!encos.isEmpty()){
-                int a = encos.removeFirst();
-                if(!encounters.contains(a)){
-                    encounters.add(a);
-                }
-            }
+        if(timeUsed == 300){
+        	lock();
+        }else if(timeUsed == timeTotal-300){
+        	changeLeave();
+        }else if(timeUsed == timeTotal){
+        	leave();
+        	checkEncounter();			//klaeren ob notwendig		
+        	return false;
         }
-        if(timeUsed==300){
-            this.finished = true;
-        }
+        checkEncounter();
+        return true;
     }
 
     /**
@@ -54,22 +55,25 @@ public class Locker {
     }
 
     /**
-     *  Checks if and how many encounters occur. The locker must be currently in use otherwise an encounter is not possible and 0 is returned
-     * @return a list with the ids of other visitors if the locker and a neighbour are both "inUse"
+     *  Checks if an encounter occured. The locker must be currently in use otherwise an encounter is not possible and 0 is returned.
+     *  Checks for only one encounter each time the visitor changes his clothes.
      */
-    public LinkedList<Integer> checkEncounter(){
-        LinkedList<Integer> dummy = new LinkedList<Integer>();
-        if(!inUse){
-            return dummy;
-        }else{
-            for(Locker l : neighbours){
-                if(l.isInUse()){
-                    int enc = l.getVisitorId();
-                    dummy.add(enc);
+    public void checkEncounter(){
+    	if(inUse){
+    		if(changeBefore && !encounterEntry){
+                for(Locker l : neighbours){
+                    if(l.isInUse()){
+                        encounterEntry = true;
+                    }
+                }
+    		}else if(changeAfter && !encounterLeave){
+    			for(Locker l : neighbours){
+    				if(l.isInUse()){
+    					encounterLeave = true;
+                    }
                 }
             }
-            return dummy;
-        }
+    	}  
     }
 
     //region SET STATUS
@@ -103,8 +107,7 @@ public class Locker {
         this.timeTotal = time;
         this.timeUsed = 0;
         this.visitorId = visId;
-        this.visitorCounter++;
-        this.encounters = new LinkedList<Integer>();
+        this.changeBefore = true;
     }
 
     /**
@@ -112,6 +115,7 @@ public class Locker {
      */
     public void lock(){
         this.inUse = false;
+        this.changeBefore = false;
     }
 
     /**
@@ -119,6 +123,7 @@ public class Locker {
      */
     public void changeLeave(){
         this.inUse = true;
+        this.changeAfter = true;
     }
 
     /**
@@ -127,15 +132,28 @@ public class Locker {
     public void leave(){
         this.used = false;
         this.inUse = false;
+        this.changeAfter = false;
+        
     }
 
     //endregion
 
+    /**
+     * returns the id of the actual visitor
+     * @return
+     */
     public int getVisitorId(){
         return this.visitorId;
     }
 
-    public LinkedList<Integer> getEncounters(){
-        return this.encounters;
+    /**
+     * used when the visitor leaves, counts the encounters. 
+     * @return number of encounters, max 2
+     */
+    public int getEncounters(){
+    	int enc = 0;
+    	if(encounterEntry)enc++;
+        if(encounterLeave)enc++;
+        return enc;
     }
 }

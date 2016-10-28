@@ -7,15 +7,15 @@ import java.util.LinkedList;
  */
 public class Gym {
 
-    private int columns;         //Number of lockers in a row
-    private int rows;            //Number of rows with lockers
-    private int total;           //Total number of lockers
-    private Locker[][] lockers;  //All lockers
-    private LinkedList<int[]> lockersInUse; //TODO herausfinden wie am besten anhand id loeschen wenn fertig
+    private int columns;         			//Number of lockers in a row
+    private int rows;           			//Number of rows with lockers
+    private int total;          		 	//Total number of lockers
+    private Locker[][] lockers;  			//All lockers
+    private LinkedList<int[]> lockersInUse; //contains [0]id, [1]row, [2]column 
 
 
     /**
-     * Constructor, initialises lockers[rows][columns]
+     * Constructor, initializes lockers[rows][columns]
      * @param col   number of columns
      * @param row   number of rows
      */
@@ -24,28 +24,39 @@ public class Gym {
         this.rows = row;
         this.total = col*row;
         lockers = new Locker[rows][columns];
+        setNeighbours();
     }
 
-    //TODO ueberlegen wie run() am besten einzusetzen
-
     /**
-     * returns a list with visitorID and the number of encounters
-     * @return
+     * increments the time of each locker that is actual in use and gets the number of encounters when the time is up
+     * @return a list with visitorID [0] and the number of encounters [1]
      */
-    /*public LinkedList<int[]> run(){
-
-    }*/
+    public LinkedList<int[]> run(){
+    	LinkedList<int[]> output = new LinkedList<int[]>();
+    	for(int[] i : lockersInUse){
+    		if(!lockers[i[1]][i[2]].run()){		//if false, return encounters
+    			int[] lockerData = new int[2];
+    			lockerData[0] = i[0];
+    			lockerData[1] = lockers[i[1]][i[2]].getEncounters();
+    			output.add(lockerData);
+    			// TODO noch aus Liste loeschen!
+    		}
+    	}
+    	return output;
+    }
 
     /**
      * Receives the coordinates of a chosen locker from the class Calculate and
      * starts its use
      * @param row   value of the row
      * @param col   value of the column
-     * @param time  the time the user will need
+     * @param time  the time the user will stay
      * @param visID the visitor id
      */
     public void choseLocker(int row, int col, int time, int visID){
         lockers[row][col].changeArrive(time, visID);
+        int[] i = {visID, row, col};
+        this.lockersInUse.add(i);
     }
 
     /**

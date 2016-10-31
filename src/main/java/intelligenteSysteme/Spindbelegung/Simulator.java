@@ -8,18 +8,19 @@ import java.util.Scanner;
 /**
  * Created by Tc0r3 on 25.10.2016.
  */
-public class Calculate {
+public class Simulator {
 
     private int col;
     private int row;
     private int timeTotal;
     private int timeUsed;
     private String path;
-    private LinkedList<int[]> times;  //a list of int-Arrays, containing ID, time and encounters of all visitors
-    private Gym gym;            //the gym,
-    private int focusID;        //the id of the focused visitor
-    private int currentID;      //the id of the next visitor
-    private LinkedList<int[]> output;
+    private LinkedList<int[]> times;  	//a list of int-Arrays, containing ID, time and encounters of all visitors
+    private Gym gym;            		//the gym,
+    private int focusID;        		//the id of the focused visitor
+    private int currentID;      		//the id of the next visitor
+    private LinkedList<int[]> output;		//zu map aendern!
+    
 
 
     /**
@@ -29,7 +30,7 @@ public class Calculate {
      * @param time
      * @param txt
      */
-    public Calculate(int r, int c, int time, String txt){
+    public Simulator(int r, int c, int time, String txt){
     	this.row = r;
     	this.col = c;
         this.timeTotal = time;
@@ -49,14 +50,13 @@ public class Calculate {
         	timeUsed += 10;								
         	if(rndCheck()){
         		Visitor v = createVisitor(currentID);
-        		choseRandom(v.getTime(), v.getID());
+        		chooseRandom(v.getTime(), v.getID());
         	}
         	if(timeUsed == 3000){						//focus person arrives at ~ 15:00 
         		this.focusID = this.currentID;			//saves the id of the focus person
         	}
         	this.output.addAll(gym.run());
         }
-        
     }
 
 
@@ -75,11 +75,11 @@ public class Calculate {
      * returns a free random locker. Tries again if occupied 
      * @return unused locker
      */
-    public void choseRandom(int time, int visID){
+    public void chooseRandom(int time, int visID){
         int r = (int) Math.random()*row;
         int c = (int) Math.random()*col;
         if(!gym.getLocker()[r][c].isUsed()){
-            choseRandom(time, visID);             //if used try again
+            chooseRandom(time, visID);             //if used try again
         }
         gym.choseLocker(r,c,time,visID);
     }
@@ -87,7 +87,7 @@ public class Calculate {
     /**
      * Selects a locker in an intelligent way
      */
-    public void choseWisely(){					//TODO not implmented yet
+    public void chooseWisely(){					//TODO not implmented yet
 
     }
 
@@ -98,10 +98,12 @@ public class Calculate {
     public int getTimeFromList(){
         int i = (int) Math.random()*times.size();
         int out = times.get(i)[0];
+        
         times.get(i)[1]--;
         if(times.get(i)[1] == 0){
             times.remove(i);
         }
+        
         return out;
     }
     

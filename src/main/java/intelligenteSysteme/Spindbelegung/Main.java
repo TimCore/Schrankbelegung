@@ -19,7 +19,7 @@ public class Main {
 
     public static void main(String[] args){
     	txt = Paths.get("").toAbsolutePath().toString()+File.separator+"doc"+File.separator+"Belegungszeiten.txt";
-        Calculate cal = new Calculate(ROWS,COL,fullTime(), txt);
+        Simulator cal = new Simulator(ROWS,COL,fullTime(), txt);
         cal.run();
         for(int[] i : cal.getTimes()){
         	System.out.println(i[0] + " : " + i[1]);

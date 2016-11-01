@@ -7,11 +7,12 @@ import java.util.LinkedList;
  */
 public class Gym {
 
-    private int columns;         			//Number of lockers in a row
-    private int rows;           			//Number of rows with lockers
-    private int total;          		 	//Total number of lockers
-    private Locker[][] lockers;  			//All lockers
-    private LinkedList<int[]> lockersInUse; //contains [0]id, [1]row, [2]column 
+    private int columns;         				//Number of lockers in a row
+    private int rows;           				//Number of rows with lockers
+    private int total;          		 		//Total number of lockers
+    private Locker[][] lockers;  				//All lockers
+    private LinkedList<Locker> usedLockers; 	//A Map containing references to all used Lockers
+    private LinkedList<Locker> freeLockers;	//A Map containing references to all free Lockers
 
 
     /**
@@ -25,46 +26,42 @@ public class Gym {
         this.total = col*row;
         lockers = new Locker[rows][columns];
         setNeighbours();
+        for(int i = 0; i < rows; i++){
+        	for(int j = 0; j < columns; j++){
+        		
+        	}
+        }
     }
 
     /**
-     * increments the time of each locker that is actual in use and gets the number of encounters when the time is up
-     * @return a list with visitorID [0] and the number of encounters [1]
-     */
-    public LinkedList<int[]> run(){
-    	LinkedList<int[]> output = new LinkedList<int[]>();
-    	for(int[] i : lockersInUse){
-    		if(!lockers[i[1]][i[2]].run()){		//if false, return encounters
-    			int[] lockerData = new int[2];
-    			lockerData[0] = i[0];
-    			lockerData[1] = lockers[i[1]][i[2]].getEncounters();
-    			output.add(lockerData);
-    			// TODO noch aus Liste loeschen!
-    		}
-    	}
-    	return output;
-    }
-
-    /**
-     * Receives the coordinates of a chosen locker from the class Calculate and
-     * starts its use
+     * Removes the locker with the given coordinates from the list of free lockers, adds it to the list of lockers in use and returns it
      * @param row   value of the row
      * @param col   value of the column
-     * @param time  the time the user will stay
-     * @param visID the visitor id
      */
-    public void choseLocker(int row, int col, int time, int visID){
-        lockers[row][col].changeArrive(time, visID);
-        int[] i = {visID, row, col};
-        this.lockersInUse.add(i);
+    public Locker choseLocker(int row, int col){
+    	freeLockers.remove(lockers[row][col]);
+    	usedLockers.add(lockers[row][col]);
+    	lockers[row][col].incVisits();
+        return lockers[row][col];
+    }
+    
+    /**
+     * Removes the locker with the given coordinates from the list of used lockers and adds it to the list of free lockers
+     * @param row   value of the row
+     * @param col   value of the column
+     */
+    public void freeLocker(int row, int col){
+    	freeLockers.remove(lockers[row][col]);
+    	usedLockers.add(lockers[row][col]);
+    	lockers[row][col].setCurrentlyInUse(false);
     }
 
     /**
      * Sets the neighbours for each Locker TODO only for two rows yet
      */
     public void setNeighbours(){
-        for(int i = 0; i<columns; i++){
-            for(int j = 0; j<rows; j++) {
+        for(int i = 0; i<rows; i++){
+            for(int j = 0; j<columns; j++) {
                 if(i==0 && j==0){                                        //upper left corner
                     lockers[i][j+1].addNeighbour(lockers[i][j+1]);
                     lockers[i+1][j].addNeighbour(lockers[i][j+1]);
@@ -97,6 +94,17 @@ public class Gym {
             }
         }
     }
+    
+    /**
+     * Resets all lockers for the next simulation
+     */
+    public void reset(){
+    	for(int i = 0; i<rows; i++){
+            for(int j = 0; j<columns; j++) {
+            	lockers[i][j].reset();
+            }
+    	}    
+    }
 
     /**
      * Returns the total number of lockers
@@ -106,14 +114,14 @@ public class Gym {
     }
 
     /**
-     * returns the amount of rows
+     * Returns the amount of rows
      */
     public int getRows(){
         return this.rows;
     }
 
     /**
-     * returns the amount of columns
+     * Returns the amount of columns
      */
     public int getColumns(){
         return this.columns;
@@ -123,5 +131,22 @@ public class Gym {
      * Returns the lockers as a array [row][column]
      */
     public Locker[][] getLocker(){ return this.lockers; }
+    
+    /**
+     * Returns a list of all free lockers
+     */
+    public LinkedList<Locker> getFreeLockers(){
+    	return this.freeLockers;
+    }
+    
+    /**
+     * Returns a list of all used lockers
+     */
+    public LinkedList<Locker> getUsedLockers(){
+    	return this.usedLockers;
+    }
+    
+    
+    
 
 }

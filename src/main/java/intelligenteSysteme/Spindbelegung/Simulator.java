@@ -31,14 +31,21 @@ public class Simulator {
      * Starts the simulation. Decrements the timeamount of the simulator and all visitors by the skiptime-value. Add
      */
     public void startSimulator(){
-    	while(timeLeft > 0) {
-			reduceTime(skipTimeValue);
-		}
-    	visitors.values().stream().parallel().forEach(v->{
-    		encounters.put(v.getID(),v.getEncounters());
+		reduceTime(skipTimeValue);
+    }
+
+	/**
+	 * Clears all entrys and set encounters
+	 */
+	public void clearSimulator() {
+		visitors.values().stream().parallel().forEach(v->{
+			encounters.put(v.getID(),v.getEncounters());
 		});
 		visitors.clear();
-    }
+	}
+
+
+
     
     /**
      * reduces the time by the given value for the Simluator and every active visitor until he has left time.
@@ -52,19 +59,10 @@ public class Simulator {
     		v.reduceTime(value);
     		if(!v.isTimeLeft()){
     			encounters.put(v.getID(), v.getEncounters());
-    			removeVisitor(v);
+    			visitors.remove(v.getID());
     		}
     	}
     }
-
-
-    public  synchronized void addVisitor(Visitor visitor) {
-		this.visitors.add(visitor.getID(),visitor);
-	}
-
-	private synchronized Visitor removeVisitor(Visitor visitor){
-		this.visitors.remove(visitor.getID());
-	}
 
 
     

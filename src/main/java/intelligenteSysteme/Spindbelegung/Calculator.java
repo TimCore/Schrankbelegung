@@ -1,20 +1,30 @@
 package intelligenteSysteme.Spindbelegung;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.util.LinkedList;
-import java.util.Scanner;
+import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 public class Calculator {
 	
 	private Gym gym;
 	private  Simulator simulator;
+    private Config config;
+    private Random random;
+    /**
+     * The times from the txt fle
+     */
+    private Map<Integer,Integer> times;
 
-
-	public Calculator(){
+	public Calculator(Config config){
 	    //TODO Feste werte durch config ändern
         this.simulator= new Simulator(1000);
         this.gym= new Gym(2,75);
+        this.config=config;
+        this.times= new HashMap<>();
+        this.random= new Random();
 	}
 	
 	
@@ -24,8 +34,8 @@ public class Calculator {
      * @return unused locker
      */
     public void chooseRandom(int time, int visID){
-        int r = (int) Math.random()*row;
-        int c = (int) Math.random()*col;
+        int r = this.random.nextInt(0,this.config);
+        int c = this.random.nextInt();
         if(){
             chooseRandom(time, visID);             //if used try again
         }
@@ -33,7 +43,7 @@ public class Calculator {
     }
 
     public void randomAlg(){
-        CompletableFuture.runAsync(() -> this.simulator.startSimulator());
+        while()
 
 
 
@@ -61,17 +71,16 @@ public class Calculator {
         LinkedList<int[]> out = new LinkedList<int[]>();
         try{
             File file = new File(txt);
-            Scanner in = new Scanner(file);
-            String ln = in.nextLine();      //ignore first line
-            ln = in.nextLine();
-            String[] str;
-            int[] df = new int[2];
-            while(ln != ""){
-                str = ln.split(" ");
-                df[0] = Integer.parseInt(str[0]);
-                df[1] = Integer.parseInt(str[1]);
-                out.add(df);
-                ln = in.nextLine();
+            BufferedReader reader = new BufferedReader(new FileReader(txt));
+            String ln="";      //ignore first line
+            int timeId=0;
+            int time=0;
+            String[] values;
+            while ((ln=reader.readLine())!=null){
+                values=ln.split(" ");
+                timeId=Integer.parseInt(values[0]);
+                time=Integer.parseInt(values[1]);
+                times.put(timeId,time);
             }
         }catch (Exception e){
             System.out.println("File not found");

@@ -1,0 +1,10 @@
+{
+  "locker_rows":2,
+  "locker_columns":75,
+  "total_lockers":150,
+  "gym_open_time":10,
+  "gym_close_time":22,
+  "simulation_reapeats":10,
+  "path_to_visitorlist":"/home/eiamnacken/Schrankbelegung/documents/Belegungszeiten.tx"
+
+}

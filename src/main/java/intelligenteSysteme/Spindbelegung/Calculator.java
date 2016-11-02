@@ -16,34 +16,44 @@ public class Calculator {
     /**
      * The times from the txt fle
      */
-    private Map<Integer,Integer> times;
+    private int[] times;
 
 	public Calculator(Config config){
 	    //TODO Feste werte durch config ändern
         this.simulator= new Simulator(1000);
         this.gym= new Gym(2,75);
         this.config=config;
-        this.times= new HashMap<>();
         this.random= new Random();
+        readIn(config.getPATH_TO_VISIORLIST());
+
 	}
 	
 	
-	/*
+
     /**
      * returns a free random locker. Tries again if occupied 
      * @return unused locker
      */
-    public void chooseRandom(int time, int visID){
-        int r = this.random.nextInt(0,this.config);
-        int c = this.random.nextInt();
-        if(){
-            chooseRandom(time, visID);             //if used try again
-        }
-        gym.choseLocker(r,c);
+    private Locker chooseRandomLocker(){
+        Locker locker = this.gym.getFreeLockers().get(this.random.nextInt());
+        return locker;
     }
 
     public void randomAlg(){
-        while()
+        int time = Main.fullTime();
+        int id = 0;
+        int localRandom;
+        while(time>0){
+            this.simulator.startSimulator();
+            if(rndCheck()){
+                localRandom= this.random.nextInt(times.length);
+                Visitor visitor = new Visitor(times[localRandom], id);
+                visitor.setLocker(chooseRandomLocker());
+                this.simulator.addVisitor(visitor);
+                id +=1;
+            }
+            time-=10;
+        }
 
 
 
@@ -53,9 +63,9 @@ public class Calculator {
      * Uses a random value to simulate a probability of 10% that a new visitor arrives. 
      * @return	true if value below 0.1
      */
-    public boolean rndCheck(){
+    private boolean rndCheck(){
     	double rnd = Math.random();
-    	if(rnd < 0.1){
+    	if(rnd <= 0.1){
     		return true;
     	}else{
     		return false;
@@ -70,18 +80,23 @@ public class Calculator {
     public LinkedList<int[]> readIn(String txt){
         LinkedList<int[]> out = new LinkedList<int[]>();
         try{
-            File file = new File(txt);
             BufferedReader reader = new BufferedReader(new FileReader(txt));
-            String ln="";      //ignore first line
+            String ln;
+            reader.readLine();
             int timeId=0;
-            int time=0;
             String[] values;
             while ((ln=reader.readLine())!=null){
-                values=ln.split(" ");
-                timeId=Integer.parseInt(values[0]);
-                time=Integer.parseInt(values[1]);
-                times.put(timeId,time);
+                timeId++;
             }
+            reader.close();
+            reader = new BufferedReader(new FileReader(txt));
+            this.times= new int[timeId];
+            timeId=0;
+            reader.readLine();
+            while ((ln=reader.readLine())!=null){
+                this.times[timeId]=Integer.parseInt(ln.split(" ")[1]);
+            }
+            reader.close();
         }catch (Exception e){
             System.out.println("File not found");
         }

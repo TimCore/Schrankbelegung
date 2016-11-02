@@ -26,6 +26,8 @@ public class Simulator {
     	this.encounters = new HashMap<>();
 		this.visitors= new HashMap<>();
     }
+
+
     
     /**
      * Starts the simulation. Decrements the timeamount of the simulator and all visitors by the skiptime-value. Add
@@ -64,6 +66,8 @@ public class Simulator {
     	}
     }
 
-
+	public void addVisitor(Visitor v){
+		this.visitors.put(v.getID(),v);
+	}
     
 }

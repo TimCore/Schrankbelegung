@@ -1,10 +1,10 @@
 package intelligenteSysteme.Spindbelegung;
 
-import jdk.nashorn.api.scripting.JSObject;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.io.File;
-import java.nio.file.Paths;
-import java.util.List;
+import java.io.FileReader;
 
 /**
  * Reads the .txt-file 
@@ -23,8 +23,20 @@ public class Main {
     	if(args.length<1||args.length>1){
     	    throw new Exception("To few or to many argmunets");
         }
-        File configFile = new File(args[0]);
-        
+        org.json.simple.parser.JSONParser parser = new JSONParser();
+        JSONObject object = (JSONObject) parser.parse(new FileReader(args[0]));
+        int row = Integer.parseInt(object.get("locker_rows").toString());
+        int col = Integer.parseInt(object.get("locker_columns").toString());
+        int lockers = Integer.parseInt(object.get("total_lockers").toString());
+        int openTime = Integer.parseInt(object.get("gym_open_time").toString());
+        int closeTime = Integer.parseInt(object.get("gym_close_time").toString());
+        int repeats = Integer.parseInt(object.get("simulation_reapeats").toString());
+        String path = object.get("path_to_visitorlist").toString();
+        Config config = new Config(row,col,lockers,openTime,closeTime,repeats,path);
+
+        Calculator  calculator = new Calculator(config);
+        calculator.randomAlg();
+
     }
 
     /**

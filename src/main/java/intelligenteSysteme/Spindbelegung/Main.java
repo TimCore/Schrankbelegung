@@ -1,5 +1,7 @@
 package intelligenteSysteme.Spindbelegung;
 
+import jdk.nashorn.api.scripting.JSObject;
+
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.List;
@@ -17,13 +19,12 @@ public class Main {
     private static int CLOSE = 22;
     private static int REPEATS = 1;
 
-    public static void main(String[] args){
-    	txt = Paths.get("").toAbsolutePath().toString()+File.separator+"doc"+File.separator+"Belegungszeiten.txt";
-        Simulator cal = new Simulator(ROWS,COL,fullTime(), txt);
-        cal.run();
-        for(int[] i : cal.getTimes()){
-        	System.out.println(i[0] + " : " + i[1]);
+    public static void main(String[] args) throws Exception {
+    	if(args.length<1||args.length>1){
+    	    throw new Exception("To few or to many argmunets");
         }
+        File configFile = new File(args[0]);
+        
     }
 
     /**

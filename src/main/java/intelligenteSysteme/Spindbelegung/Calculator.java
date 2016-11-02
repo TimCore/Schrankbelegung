@@ -3,13 +3,18 @@ package intelligenteSysteme.Spindbelegung;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.concurrent.CompletableFuture;
 
 public class Calculator {
 	
 	private Gym gym;
-	
+	private  Simulator simulator;
+
+
 	public Calculator(){
-		//this.gym = new Gym()
+	    //TODO Feste werte durch config ändern
+        this.simulator= new Simulator(1000);
+        this.gym= new Gym(2,75);
 	}
 	
 	
@@ -21,13 +26,18 @@ public class Calculator {
     public void chooseRandom(int time, int visID){
         int r = (int) Math.random()*row;
         int c = (int) Math.random()*col;
-        if(!gym.getLocker()[r][c].isUsed()){
+        if(){
             chooseRandom(time, visID);             //if used try again
         }
-        gym.choseLocker(r,c,time,visID);
+        gym.choseLocker(r,c);
     }
-/*
-    
+
+    public void randomAlg(){
+        CompletableFuture.runAsync(() -> this.simulator.startSimulator());
+
+
+
+    }
     
     /**
      * Uses a random value to simulate a probability of 10% that a new visitor arrives. 

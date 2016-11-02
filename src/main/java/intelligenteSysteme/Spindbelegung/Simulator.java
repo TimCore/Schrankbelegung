@@ -14,7 +14,7 @@ public class Simulator {
     private int focusID;        				//the id of the focused visitor
     private int currentID;      				//the id of the next visitor
     private Map<Integer, Integer> encounters;	//Contains the visitorID and 	
-    private LinkedList<Visitor> visitors;		//A List  
+    private Map<Integer,Visitor> visitors;	//A List
 
 
     /**
@@ -23,20 +23,21 @@ public class Simulator {
      */
     public Simulator(int timeLeft){
     	this.timeLeft = timeLeft;
-    	this.encounters = new HashMap<Integer, Integer>();
+    	this.encounters = new HashMap<>();
+		this.visitors= new HashMap<>();
     }
     
     /**
      * Starts the simulation. Decrements the timeamount of the simulator and all visitors by the skiptime-value. Add
      */
-    public void StartSimulator(){
-    	while(timeLeft > 0){
-    		reduceTime(skipTimeValue);
-    	}
-    	for (Visitor v : visitors){
-    		encounters.put(v.getID(), v.getEncounters());
-			visitors.remove(v);
-    	}
+    public void startSimulator(){
+    	while(timeLeft > 0) {
+			reduceTime(skipTimeValue);
+		}
+    	visitors.values().stream().parallel().forEach(v->{
+    		encounters.put(v.getID(),v.getEncounters());
+		});
+		visitors.clear();
     }
     
     /**
@@ -47,16 +48,23 @@ public class Simulator {
      */
     public void reduceTime(int value){
     	this.timeLeft -= value;
-    	for (Visitor v : visitors){
+    	for (Visitor v : visitors.values()){
     		v.reduceTime(value);
     		if(!v.isTimeLeft()){
     			encounters.put(v.getID(), v.getEncounters());
-    			visitors.remove(v);
+    			removeVisitor(v);
     		}
     	}
     }
 
-    
+
+    public  synchronized void addVisitor(Visitor visitor) {
+		this.visitors.add(visitor.getID(),visitor);
+	}
+
+	private synchronized Visitor removeVisitor(Visitor visitor){
+		this.visitors.remove(visitor.getID());
+	}
 
 
     

@@ -21,11 +21,11 @@ public class Visitor {
     public void reduceTime(int timeToReduce){
     	this.leftTime -= timeToReduce;
     	if(leftTime == visitTime - 300){
-    		this.locker.setCurrentlyInUse(false);
+    		changeClothes(false);
     	}else if(leftTime == 300){
-    		this.locker.setCurrentlyInUse(true);
+    		changeClothes(true);
     	}else if(leftTime == 0){
-    		this.locker.setCurrentlyInUse(false);
+    		changeClothes(false);
     	}
     }
     
@@ -33,8 +33,8 @@ public class Visitor {
     	return (leftTime > 0);
     }
     
-    public void changeClothes(){
-    	this.locker.setCurrentlyInUse(true);
+    public void changeClothes(Boolean status){
+    	this.locker.setCurrentlyInUse(status);
     }
 
     public int getLeftTime(){
@@ -55,6 +55,7 @@ public class Visitor {
     
     public void setLocker(Locker locker){
     	this.locker = locker;
+    	changeClothes(true);
     }
 
 

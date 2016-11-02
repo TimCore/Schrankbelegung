@@ -59,11 +59,11 @@ public class Simulator {
 
 
     public  synchronized void addVisitor(Visitor visitor) {
-		this.visitors.add(visitor.getID(),visitor);
+		this.visitors.put(visitor.getID(),visitor);
 	}
 
 	private synchronized Visitor removeVisitor(Visitor visitor){
-		this.visitors.remove(visitor.getID());
+		return this.visitors.remove(visitor.getID());
 	}
 
 

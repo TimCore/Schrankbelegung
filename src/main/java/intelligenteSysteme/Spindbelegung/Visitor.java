@@ -11,6 +11,11 @@ public class Visitor {
     private int id;					//The id of the visitor
     private Locker locker;			//The locker which is used by the visitor 
 
+    /**
+     * Constructor
+     * @param time	amount of time in seconds the visitor will stay at the gym
+     * @param id	the id of the visitor
+     */
     public Visitor(int time, int id){
         this.encounters = 0;
         this.visitTime = time;
@@ -18,6 +23,10 @@ public class Visitor {
         this.id = id;
     }
     
+    /**
+     * Reduces the time by the given value, used to simulate time
+     * @param timeToReduce	amount of time to reduce
+     */
     public void reduceTime(int timeToReduce){
     	this.leftTime -= timeToReduce;
     	if(leftTime == visitTime - 300){
@@ -29,37 +38,56 @@ public class Visitor {
     	}
     }
     
+    /**
+     * Checks if the visitor will stay or leave
+     * @return	true if time is left, false if time is over
+     */
     public Boolean isTimeLeft(){
     	return (leftTime > 0);
     }
     
+    /**
+     * Changes the status of the locker if the user starts changing or not
+     * @param status
+     */
     public void changeClothes(Boolean status){
     	this.locker.setCurrentlyInUse(status);
     }
 
+    /**
+     * returns the left Time of this visit in seconds
+     */
     public int getLeftTime(){
         return this.leftTime;
     }
     
+    /**
+     * Returns the full time of the visit of the this visitor
+     * @return
+     */
     public int getVisitTime(){
         return this.visitTime;
     }
 
+    /**
+     * returns the number of Encounters of the visitor's actual visit
+     */
     public int getEncounters(){
         return this.encounters;
     }
     
+    /**
+     * Returns the ID of this visitor
+     */
     public int getID(){
     	return this.id;
     }
     
+    /**
+     * Gives this visitor a free locker to change
+     */
     public void setLocker(Locker locker){
     	this.locker = locker;
     	changeClothes(true);
     }
-
-
-
-
-
 }

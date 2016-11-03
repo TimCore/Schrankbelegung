@@ -2,6 +2,8 @@ package intelligenteSysteme.Spindbelegung;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import intelligenteSysteme.Spindbelegung.logger.Logger;
+import intelligenteSysteme.Spindbelegung.logger.LoggingLevel;
 
 import java.io.FileReader;
 
@@ -17,7 +19,8 @@ public class Main {
     	if(args.length<1||args.length>1){
     	    throw new Exception("To few or to many argmunets");
         }
-        System.setProperty("log4j.configurationFile","/home/sven/git/Schrankbelegung/src/main/resource/log4j2.json");
+        Logger.addLogFile(LoggingLevel.SYSTEM);
+        Logger.log(LoggingLevel.SYSTEM,System.nanoTime());
         JsonParser parser = new JsonParser();
         JsonObject object = (JsonObject) parser.parse(new FileReader(args[0]));
         int row = object.get("locker_rows").getAsInt();
@@ -28,9 +31,11 @@ public class Main {
         int repeats = object.get("simulation_reapeats").getAsInt();
         String path = object.get("path_to_visitorlist").getAsString();
         config = new Config(row,col,lockers,openTime,closeTime,repeats,path);
-
+        Logger.log(LoggingLevel.SYSTEM,"Config gelesen");
+        Logger.log(LoggingLevel.SYSTEM,System.nanoTime());
         Calculator  calculator = new Calculator(config);
         calculator.randomAlg();
+        Logger.writeLogs();
 
     }
 

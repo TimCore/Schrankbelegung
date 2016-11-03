@@ -86,7 +86,6 @@ public class Logger {
                 if (!Files.exists(filePath)) {
                     Files.createFile(filePath);
                 }
-                System.out.println(value.toString());
                 writer.write(value.toString());
             } catch (IOException e) {
                 e.printStackTrace();

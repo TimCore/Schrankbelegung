@@ -78,7 +78,8 @@ public class Gym {
                     lockers[i-1][j].addNeighbour(lockers[i][j+1]);
                     lockers[i-1][j-1].addNeighbour(lockers[i][j+1]);
                     lockers[i][j-1].addNeighbour(lockers[i][j+1]);
-                }else if(i==0 && j>0 && j<rows-1){                       //upper row
+                }else if(i==0 && j>0 && j<rows-1){//upper row
+                    //TODO dieses und der nächste block sind gleich soll das so sein?
                     lockers[i][j].addNeighbour(lockers[i][j-1]);
                     lockers[i][j].addNeighbour(lockers[i][j+1]);
                     lockers[i][j].addNeighbour(lockers[i+1][j-1]);

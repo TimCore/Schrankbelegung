@@ -1,11 +1,10 @@
 package intelligenteSysteme.Spindbelegung;
 
+
+
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
-import java.io.InputStreamReader;
-import java.util.*;
-import java.util.concurrent.CompletableFuture;
+import java.util.Random;
 
 public class Calculator {
 	
@@ -94,6 +93,7 @@ public class Calculator {
                 this.times[timeId]=Integer.parseInt(ln.split(" ")[1]);
             }
             reader.close();
+
         }catch (Exception e){
             System.out.println("File not found");
             e.printStackTrace();

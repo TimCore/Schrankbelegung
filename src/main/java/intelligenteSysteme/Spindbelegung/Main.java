@@ -17,6 +17,7 @@ public class Main {
     	if(args.length<1||args.length>1){
     	    throw new Exception("To few or to many argmunets");
         }
+        System.setProperty("log4j.configurationFile","/home/sven/git/Schrankbelegung/src/main/resource/log4j2.json");
         JsonParser parser = new JsonParser();
         JsonObject object = (JsonObject) parser.parse(new FileReader(args[0]));
         int row = object.get("locker_rows").getAsInt();

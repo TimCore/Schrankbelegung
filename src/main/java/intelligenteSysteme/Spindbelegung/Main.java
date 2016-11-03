@@ -2,10 +2,7 @@ package intelligenteSysteme.Spindbelegung;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
-import java.io.File;
 import java.io.FileReader;
 
 /**

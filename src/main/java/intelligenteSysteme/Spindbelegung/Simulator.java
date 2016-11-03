@@ -1,5 +1,8 @@
 package intelligenteSysteme.Spindbelegung;
 
+import intelligenteSysteme.Spindbelegung.logger.Logger;
+import intelligenteSysteme.Spindbelegung.logger.LoggingLevel;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -40,10 +43,11 @@ public class Simulator {
 	 * Clears all entrys and set encounters
 	 */
 	public void clearSimulator() {
-		visitors.values().stream().parallel().forEach(v->{
+		visitors.values().forEach(v->{
 			encounters.put(v.getID(),v.getEncounters());
 		});
 		visitors.clear();
+		encounters.forEach((key,value)-> Logger.log(LoggingLevel.ENCOUNTER,key+" "+value));
 	}
 
 

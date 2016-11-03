@@ -71,6 +71,8 @@ public class Calculator {
             //TODO keine magic number
             time-=10;
         }
+        this.simulator.clearSimulator();
+
         Logger.log(LoggingLevel.SYSTEM,"Random fertig");
         Logger.log(LoggingLevel.SYSTEM,System.nanoTime());
     }

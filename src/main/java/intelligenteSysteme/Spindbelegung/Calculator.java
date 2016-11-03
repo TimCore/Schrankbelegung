@@ -86,7 +86,7 @@ public class Calculator {
             int timeId=0;
             String[] values;
             while ((ln=reader.readLine())!=null){
-                timeId++;
+                timeId+=Integer.parseInt(ln.split(" ")[1]);
             }
             reader.close();
             reader = new BufferedReader(new FileReader(txt));

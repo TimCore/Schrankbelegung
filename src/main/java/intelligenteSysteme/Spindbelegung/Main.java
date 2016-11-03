@@ -30,7 +30,7 @@ public class Main {
         int closeTime = object.get("gym_close_time").getAsInt();
         int repeats = object.get("simulation_reapeats").getAsInt();
         String path = object.get("path_to_visitorlist").getAsString();
-        config = new Config(row,col,lockers,openTime,closeTime,repeats,path);
+        config = new Config(row,col,lockers,closeTime,openTime,repeats,path);
         Logger.log(LoggingLevel.SYSTEM,"Config gelesen");
         Logger.log(LoggingLevel.SYSTEM,System.nanoTime());
         Calculator  calculator = new Calculator(config);

@@ -7,6 +7,7 @@ import intelligenteSysteme.Spindbelegung.logger.LoggingLevel;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.List;
 import java.util.Random;
 
 public class Calculator {
@@ -38,7 +39,9 @@ public class Calculator {
      * @return unused locker
      */
     private Locker chooseRandomLocker(){
-        return this.gym.getFreeLockers().get(this.random.nextInt());
+        if(this.gym.getFreeLockers().isEmpty()) return null;
+        List<Locker> locker = this.gym.getFreeLockers();
+        return locker.get(this.random.nextInt(locker.size()));
     }
 
     void randomAlg(){
@@ -62,8 +65,8 @@ public class Calculator {
                     visitor.setLocker(chooseRandomLocker());
                     this.simulator.addVisitor(visitor);
                     id += 1;
-                }
-                Logger.log(LoggingLevel.SYSTEM,"Keinen freien Locker gefunden für id"+id);
+                }else
+                    Logger.log(LoggingLevel.SYSTEM,"Keinen freien Locker gefunden für id"+id);
             }
             //TODO keine magic number
             time-=10;

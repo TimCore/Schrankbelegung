@@ -1,5 +1,7 @@
 package intelligenteSysteme.Spindbelegung;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -23,15 +25,15 @@ public class Main {
     	if(args.length<1||args.length>1){
     	    throw new Exception("To few or to many argmunets");
         }
-        org.json.simple.parser.JSONParser parser = new JSONParser();
-        JSONObject object = (JSONObject) parser.parse(new FileReader(args[0]));
-        int row = Integer.parseInt(object.get("locker_rows").toString());
-        int col = Integer.parseInt(object.get("locker_columns").toString());
-        int lockers = Integer.parseInt(object.get("total_lockers").toString());
-        int openTime = Integer.parseInt(object.get("gym_open_time").toString());
-        int closeTime = Integer.parseInt(object.get("gym_close_time").toString());
-        int repeats = Integer.parseInt(object.get("simulation_reapeats").toString());
-        String path = object.get("path_to_visitorlist").toString();
+        JsonParser parser = new JsonParser();
+        JsonObject object = (JsonObject) parser.parse(new FileReader(args[0]));
+        int row = object.get("locker_rows").getAsInt();
+        int col = object.get("locker_columns").getAsInt();
+        int lockers = object.get("total_lockers").getAsInt();
+        int openTime = object.get("gym_open_time").getAsInt();
+        int closeTime = object.get("gym_close_time").getAsInt();
+        int repeats = object.get("simulation_reapeats").getAsInt();
+        String path = object.get("path_to_visitorlist").getAsString();
         Config config = new Config(row,col,lockers,openTime,closeTime,repeats,path);
 
         Calculator  calculator = new Calculator(config);
@@ -43,7 +45,7 @@ public class Main {
      * calculates the opening time per day
      * @return opening time per day in seconds
      */
-    public static int fullTime(){
+    static int fullTime(){
         int hours = CLOSE - OPEN;
         return hours * 60 * 60;
     }

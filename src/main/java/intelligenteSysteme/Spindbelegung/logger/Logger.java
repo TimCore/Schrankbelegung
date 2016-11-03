@@ -37,7 +37,43 @@ public class Logger {
      * @param message   Which message we want to log
      */
     public static void log(LoggingLevel fileName,String message){
-        loggings.get(fileName).append(message);
+        loggings.get(fileName).append(message).append("\n");
+    }
+
+    /**
+     * Log the message in the cache of this file
+     * @param fileName  Which filelogger we want to use
+     * @param message   Which message we want to log
+     */
+    public static void log(LoggingLevel fileName,boolean message){
+        loggings.get(fileName).append(message).append("\n");
+    }
+
+    /**
+     * Log the message in the cache of this file
+     * @param fileName  Which filelogger we want to use
+     * @param message   Which message we want to log
+     */
+    public static void log(LoggingLevel fileName,long message){
+        loggings.get(fileName).append(message).append("\n");
+    }
+
+    /**
+     * Log the message in the cache of this file
+     * @param fileName  Which filelogger we want to use
+     * @param message   Which message we want to log
+     */
+    public static void log(LoggingLevel fileName,int message){
+        loggings.get(fileName).append(message).append("\n");
+    }
+
+    /**
+     * Log the message in the cache of this file
+     * @param fileName  Which filelogger we want to use
+     * @param message   Which message we want to log
+     */
+    public static void log(LoggingLevel fileName,char message){
+        loggings.get(fileName).append(message).append("\n");
     }
 
     /**

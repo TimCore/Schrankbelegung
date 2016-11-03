@@ -12,9 +12,8 @@ public class TestLogger {
      */
     @Test
     public void testWriteLogger(){
-        Logger logger = new Logger();
-        logger.addLogFile("test.txt");
-        logger.log("test.txt","Hallo welt");
-        logger.writeLogs();
+        Logger.addLogFile(LoggingLevel.TEST);
+        Logger.log(LoggingLevel.TEST,"Hallo welt");
+        Logger.writeLogs();
     }
 }

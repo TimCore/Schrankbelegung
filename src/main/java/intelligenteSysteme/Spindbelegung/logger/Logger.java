@@ -17,20 +17,18 @@ public class Logger {
     /**
      * String for the Filename StrinBuilder to log the strings
      */
-    private Map<String,StringBuilder> loggings;
+    private static Map<LoggingLevel,StringBuilder> loggings = new HashMap<>();
 
-    private final String LOGFILEPATH= Paths.get("","src","main","resource").toAbsolutePath().toString();
+    private static final String LOGFILEPATH= Paths.get("","src","main","resource").toAbsolutePath().toString();
 
-    public Logger() {
-        this.loggings = new HashMap<>();
-    }
+
 
     /**
      * Adds an logfile
      * @param fileName  Name of the logfile
      */
-    public void addLogFile(String fileName){
-        this.loggings.put(fileName,new StringBuilder());
+    public static void addLogFile(LoggingLevel fileName){
+        loggings.put(fileName,new StringBuilder());
     }
 
     /**
@@ -38,16 +36,16 @@ public class Logger {
      * @param fileName  Which filelogger we want to use
      * @param message   Which message we want to log
      */
-    public void log(String fileName,String message){
-        this.loggings.get(fileName).append(message);
+    public static void log(LoggingLevel fileName,String message){
+        loggings.get(fileName).append(message);
     }
 
     /**
      * Write all files in the given filenames by creating new ones
      */
-    public void writeLogs(){
+    public static void writeLogs(){
         loggings.forEach((key,value)->{
-            Path filePath = Paths.get(LOGFILEPATH+File.separator+key);
+            Path filePath = Paths.get(LOGFILEPATH+File.separator+key.getLogFileName());
             try (FileWriter writer = new FileWriter(filePath.toString())){
                 if (!Files.exists(filePath)) {
                     Files.createFile(filePath);

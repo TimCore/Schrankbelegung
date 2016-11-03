@@ -2,6 +2,8 @@ package intelligenteSysteme.Spindbelegung;
 
 
 
+import intelligenteSysteme.Spindbelegung.logger.Logger;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Random;
@@ -12,6 +14,7 @@ public class Calculator {
 	private  Simulator simulator;
     private Config config;
     private Random random;
+
     /**
      * The times from the txt fle
      */
@@ -25,7 +28,6 @@ public class Calculator {
         this.config=config;
         this.random= new Random();
         readIn(config.getPATH_TO_VISIORLIST());
-
 	}
 	
 	

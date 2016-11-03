@@ -11,12 +11,7 @@ import java.io.FileReader;
  */
 public class Main {
 
-	private static String txt;
-    private static int COL = 75;
-    private static int ROWS = 2;
-    private static int OPEN = 10;
-    private static int CLOSE = 22;
-    private static int REPEATS = 1;
+    private static Config config;
 
     public static void main(String[] args) throws Exception {
     	if(args.length<1||args.length>1){
@@ -31,7 +26,7 @@ public class Main {
         int closeTime = object.get("gym_close_time").getAsInt();
         int repeats = object.get("simulation_reapeats").getAsInt();
         String path = object.get("path_to_visitorlist").getAsString();
-        Config config = new Config(row,col,lockers,openTime,closeTime,repeats,path);
+        config = new Config(row,col,lockers,openTime,closeTime,repeats,path);
 
         Calculator  calculator = new Calculator(config);
         calculator.randomAlg();
@@ -43,7 +38,7 @@ public class Main {
      * @return opening time per day in seconds
      */
     static int fullTime(){
-        int hours = CLOSE - OPEN;
+        int hours = config.getGYM_CLOSE_TIME() - config.getGYM_OPEN_TIME();
         return hours * 60 * 60;
     }
     

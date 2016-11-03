@@ -25,12 +25,10 @@ public class Gym {
         this.rows = row;
         this.total = col*row;
         lockers = new Locker[rows][columns];
+        this.freeLockers= new LinkedList<>();
+        this.usedLockers= new LinkedList<>();
+        createLockers();
         setNeighbours();
-        for(int i = 0; i < rows; i++){
-        	for(int j = 0; j < columns; j++){
-        		
-        	}
-        }
     }
 
     /**
@@ -43,6 +41,16 @@ public class Gym {
     	usedLockers.add(lockers[row][col]);
     	lockers[row][col].incVisits();
         return lockers[row][col];
+    }
+
+    private void createLockers(){
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                Locker locker = new Locker(j,i);
+                this.lockers[i][j]= locker;
+                this.freeLockers.add(locker);
+            }
+        }
     }
     
     /**

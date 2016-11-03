@@ -5,6 +5,6 @@
   "gym_open_time":10,
   "gym_close_time":22,
   "simulation_reapeats":10,
-  "path_to_visitorlist":"/home/eiamnacken/Schrankbelegung/documents/Belegungszeiten.tx"
+  "path_to_visitorlist":"/home/sven/git/Schrankbelegung/documents/Belegungszeiten.txt"
 
 }

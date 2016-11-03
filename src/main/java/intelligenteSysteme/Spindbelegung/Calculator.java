@@ -20,8 +20,9 @@ public class Calculator {
 
 	public Calculator(Config config){
 	    //TODO Feste werte durch config ändern
-        this.simulator= new Simulator(1000);
-        this.gym= new Gym(2,75);
+        this.config=config;
+        this.simulator= new Simulator(Main.fullTime());
+        this.gym= new Gym(config.getLOCKER_ROWS(),config.getLOCKER_COLUMNS());
         this.config=config;
         this.random= new Random();
         readIn(config.getPATH_TO_VISIORLIST());
@@ -35,11 +36,10 @@ public class Calculator {
      * @return unused locker
      */
     private Locker chooseRandomLocker(){
-        Locker locker = this.gym.getFreeLockers().get(this.random.nextInt());
-        return locker;
+        return this.gym.getFreeLockers().get(this.random.nextInt());
     }
 
-    public void randomAlg(){
+    void randomAlg(){
         int time = Main.fullTime();
         int id = 0;
         int localRandom;
@@ -52,6 +52,7 @@ public class Calculator {
                 this.simulator.addVisitor(visitor);
                 id +=1;
             }
+            //TODO keine magic number
             time-=10;
         }
 
@@ -65,11 +66,8 @@ public class Calculator {
      */
     private boolean rndCheck(){
     	double rnd = Math.random();
-    	if(rnd <= 0.1){
-    		return true;
-    	}else{
-    		return false;
-    	}	
+        //TODO keine magic number
+        return rnd <= 0.1;
     }
 
     /**
@@ -77,8 +75,7 @@ public class Calculator {
      * @param txt path to the "Belegungszeiten.txt"
      * @return 2-dimensional int-array with int[duration][frequency]
      */
-    public LinkedList<int[]> readIn(String txt){
-        LinkedList<int[]> out = new LinkedList<int[]>();
+    private void readIn(String txt){
         try{
             BufferedReader reader = new BufferedReader(new FileReader(txt));
             String ln;
@@ -99,8 +96,8 @@ public class Calculator {
             reader.close();
         }catch (Exception e){
             System.out.println("File not found");
+            e.printStackTrace();
         }
-        return out;
     }
 
 }

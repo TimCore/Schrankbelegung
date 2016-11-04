@@ -44,6 +44,7 @@ public class Calculator {
         List<Locker> lockerList = this.gym.getFreeLockers();
         Locker locker= lockerList.remove(this.random.nextInt(lockerList.size()));
         locker.setCurrentlyInUse(true);
+        this.gym.addUsedLocker(locker);
         return locker;
     }
 

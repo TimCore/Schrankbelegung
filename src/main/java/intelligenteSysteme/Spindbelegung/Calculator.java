@@ -57,13 +57,17 @@ public class Calculator {
             Logger.log(LoggingLevel.SYSTEM,"Zeit in stunden beträgt: "+time);
             id=0;
             Logger.log(LoggingLevel.SYSTEM,"Tag: "+i);
+            Logger.log(LoggingLevel.SYSTEM,"--------------------------------");
             while (time > 0) {
-                System.out.println("check");
                 if (rndCheck()) {
+
                     Logger.log(LoggingLevel.SYSTEM, "Erstelle Visitor mit id: " + id);
                     localRandom = this.random.nextInt(times.length);
                     Visitor visitor = new Visitor(times[localRandom], id);
                     Locker locker = chooseRandomLocker();
+                    //Focusperson um 15:00 uhr
+                    if(time>=Main.fullTime()-18000)
+                        this.simulator.setFocusID(id);
                     if (locker != null) {
                         Logger.log(LoggingLevel.SYSTEM, "Freien Locker gefunde für id: " + id);
                         visitor.setLocker(locker);

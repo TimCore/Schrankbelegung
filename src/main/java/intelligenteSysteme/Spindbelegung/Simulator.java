@@ -50,7 +50,12 @@ public class Simulator {
 			encounters.put(v.getID(),v.getEncounters());
 		});
 		visitors.clear();
-		encounters.forEach((key,value)-> Logger.log(LoggingLevel.ENCOUNTER,key+" "+value));
+		encounters.forEach((key,value)->{
+			Logger.log(LoggingLevel.ENCOUNTER,key+" "+value);
+			if(key==focusID){
+				Logger.log(LoggingLevel.FOCUS,value);
+			}
+		});
 		this.gym.clearGym();
 	}
 
@@ -84,6 +89,9 @@ public class Simulator {
 		return this.visitors.remove(visitor.getID());
 	}
 
+	public void setFocusID(int id){
+		this.focusID=id;
+	}
 
     
 }

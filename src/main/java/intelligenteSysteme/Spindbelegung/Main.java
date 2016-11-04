@@ -22,6 +22,7 @@ public class Main {
         Logger.cleanLogFiles();
         Logger.addLogFile(LoggingLevel.SYSTEM);
         Logger.log(LoggingLevel.SYSTEM,System.nanoTime());
+        Logger.addLogFile(LoggingLevel.FOCUS);
         JsonParser parser = new JsonParser();
         JsonObject object = (JsonObject) parser.parse(new FileReader(args[0]));
         int row = object.get("locker_rows").getAsInt();

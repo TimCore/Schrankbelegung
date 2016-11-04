@@ -5,11 +5,19 @@ package intelligenteSysteme.Spindbelegung;
  */
 public class Visitor {
 
-    private short encounters;     	//Number of encounters during the session
+
     private int visitTime;          //The time this visitor will spend at the gym (current session)
     private int leftTime;			//The time until the visitor will leave the gym
     private int id;					//The id of the visitor
-    private Locker locker;			//The locker which is used by the visitor 
+    private Locker locker;			//The locker which is used by the visitor
+    /**
+     * First encounter when entering the gym
+     */
+    private short firstEncounter=0;
+    /**
+     * Second encounter when leaving the gym
+     */
+    private short secondEncounter=0;
 
     /**
      * Constructor
@@ -17,7 +25,6 @@ public class Visitor {
      * @param id	the id of the visitor
      */
     public Visitor(int time, int id){
-        this.encounters = 0;
         this.visitTime = time;
         this.leftTime = time;
         this.id = id;
@@ -31,22 +38,24 @@ public class Visitor {
     public void reduceTime(int timeToReduce){
     	this.leftTime -= timeToReduce;
         if(leftTime <= 300){
-    		changeClothes(true);
-            checkEncounters();
-    	}else if(leftTime <= visitTime - 300) {
-            changeClothes(false);
-        }else if(leftTime >= visitTime - 300){
-            checkEncounters();
             changeClothes(true);
-        }
+            if(this.firstEncounter==0){
+                if(this.locker.checkEncounter()){
+                    this.firstEncounter++;
+                }
+            }
+        }else if(leftTime >= visitTime - 300){
+            changeClothes(true);
+            if (this.secondEncounter==0){
+                if(this.locker.checkEncounter()){
+                    this.secondEncounter++;
+                }
+            }
+        }else changeClothes(false);
 
     }
 
-    private  void checkEncounters(){
-        if (this.locker.checkEncounter()){
-            this.encounters++;
-        }
-    }
+
     
     /**
      * Checks if the visitor will stay or leave
@@ -61,7 +70,8 @@ public class Visitor {
      * @param status
      */
     public void changeClothes(Boolean status){
-    	this.locker.setCurrentlyInUse(status);
+        this.locker.setCurrentlyInUse(status);
+
     }
 
     /**
@@ -83,7 +93,7 @@ public class Visitor {
      * returns the number of Encounters of the visitor's actual visit
      */
     public int getEncounters(){
-        return this.encounters;
+        return this.firstEncounter+this.secondEncounter;
     }
     
     /**

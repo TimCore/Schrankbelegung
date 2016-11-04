@@ -47,9 +47,7 @@ public class Simulator {
 	 * Clears all entrys and set encounters
 	 */
 	public void clearSimulator() {
-		visitors.values().forEach(v->{
-			encounters.put(v.getID(),v.getEncounters());
-		});
+		visitors.values().forEach(v-> encounters.put(v.getID(),v.getEncounters()));
 		visitors.clear();
 		encounters.forEach((key,value)->{
 			Logger.log(LoggingLevel.ENCOUNTER,key+" "+value);
@@ -57,6 +55,7 @@ public class Simulator {
 				Logger.log(LoggingLevel.FOCUS,value);
 			}
 		});
+		encounters.clear();
 		this.gym.clearGym();
 	}
 

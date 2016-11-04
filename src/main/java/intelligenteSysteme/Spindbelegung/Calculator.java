@@ -54,6 +54,7 @@ public class Calculator {
         int time=0;
         int id;
         int localRandom;
+        boolean focusPersonInUse=false;
         for(int i=config.getSIMLUATION_REPEATS();i>0;i--) {
             time=Main.fullTime();
             Logger.log(LoggingLevel.SYSTEM,"Zeit in stunden beträgt: "+time);
@@ -69,8 +70,11 @@ public class Calculator {
                     Logger.log(LoggingLevel.SYSTEM,"Visitor hat die zeit: "+this.times[localRandom]);
                     Locker locker = chooseRandomLocker();
                     //Focusperson um 15:00 uhr
-                    if(time>=Main.fullTime()-18000)
+                    if(time<=Main.fullTime()-18000&&!focusPersonInUse) {
                         this.simulator.setFocusID(id);
+                        Logger.log(LoggingLevel.SYSTEM, "Fokusperson ist: " + id);
+                        focusPersonInUse=true;
+                    }
                     if (locker != null) {
                         Logger.log(LoggingLevel.SYSTEM, "Freien Locker gefunde für id: " + id);
                         visitor.setLocker(locker);
@@ -84,6 +88,7 @@ public class Calculator {
                 //TODO keine magic number
                 time -= 10;
             }
+            focusPersonInUse=false;
             this.simulator.clearSimulator();
             Logger.writeLogs();
         }
@@ -112,7 +117,7 @@ public class Calculator {
             String ln;
             reader.readLine();
             int timeId=0;
-            int multiTime=0;
+            int multiTime;
             while ((ln=reader.readLine())!=null){
                 timeId+=Integer.parseInt(ln.split(" ")[1]);
             }

@@ -11,24 +11,19 @@ public class Locker {
     private LinkedList<Locker> neighbours;  		// List of other Lockers next to this one
     private int columnNumber;
     private int rowNumber;
-    private int visits;
+
 
 
     /**
      * Constructor
      */
     public Locker(int columnNumber, int rowNumber){
-        this.neighbours = new LinkedList<Locker>();
+        this.neighbours = new LinkedList<>();
         this.columnNumber = columnNumber;
         this.rowNumber = rowNumber;
     }
 
-    /**
-     * Resets the value of the visits-counter
-     */
-    public void reset(){
-    	this.visits = 0;
-    }
+
 
     /**
      * Adds another Locker as a neighbour
@@ -51,9 +46,7 @@ public class Locker {
     	return false;
     }
 
-    public void incVisits(){
-    	this.visits++;
-    }
+
     
     public Boolean getCurrentlyInUse(){
     	return currentlyInUse; 

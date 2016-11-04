@@ -125,16 +125,7 @@ public class Gym {
         }
     }
     
-    /**
-     * Resets all lockers for the next simulation
-     */
-    public void reset(){
-    	for(int i = 0; i<rows; i++){
-            for(int j = 0; j<columns; j++) {
-            	lockers[i][j].reset();
-            }
-    	}    
-    }
+
 
     /**
      * Returns the total number of lockers

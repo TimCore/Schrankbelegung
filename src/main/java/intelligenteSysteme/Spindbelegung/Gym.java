@@ -55,13 +55,12 @@ public class Gym {
     
     /**
      * Removes the locker with the given coordinates from the list of used lockers and adds it to the list of free lockers
-     * @param row   value of the row
-     * @param col   value of the column
+     @param locker Which Locker we want to put back into the free list
      */
-    public void freeLocker(int row, int col){
-    	freeLockers.remove(lockers[row][col]);
-    	usedLockers.add(lockers[row][col]);
-    	lockers[row][col].setCurrentlyInUse(false);
+    public void freeLocker(Locker locker){
+    	freeLockers.add(locker);
+    	usedLockers.remove(locker);
+    	locker.setCurrentlyInUse(false);
     }
 
     /**
@@ -146,6 +145,10 @@ public class Gym {
      */
     public LinkedList<Locker> getFreeLockers(){
     	return this.freeLockers;
+    }
+
+    public void addUsedLocker(Locker locker){
+        this.usedLockers.add(locker);
     }
     
     /**

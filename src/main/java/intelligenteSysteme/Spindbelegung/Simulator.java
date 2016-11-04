@@ -18,16 +18,19 @@ public class Simulator {
     private int currentID;      				//the id of the next visitor
     private Map<Integer, Integer> encounters;	//Contains the visitorID and 	
     private Map<Integer,Visitor> visitors;	//A List
-
+	private Gym gym;
 
     /**
      * Constructor
      * @param timeLeft	The left time for this simulation
      */
-    public Simulator(int timeLeft){
+    public Simulator(int timeLeft,Gym gym){
+		//TODO Magic number
+		this.skipTimeValue=10;
     	this.timeLeft = timeLeft;
     	this.encounters = new HashMap<>();
 		this.visitors= new HashMap<>();
+		this.gym=gym;
     }
 
 
@@ -65,6 +68,7 @@ public class Simulator {
     		v.reduceTime(value);
     		if(!v.isTimeLeft()){
     			encounters.put(v.getID(), v.getEncounters());
+				this.gym.freeLocker(v.getLocker());
     			visitors.remove(v.getID());
     		}
     	}

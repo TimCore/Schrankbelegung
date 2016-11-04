@@ -27,6 +27,7 @@ public class Visitor {
      * Reduces the time by the given value, used to simulate time
      * @param timeToReduce	amount of time to reduce
      */
+    //TODO wir müssen ändern wie gecheckt wird ob ein visitor grade eine begegnung hat und zwar wenn er am umziehen ist
     public void reduceTime(int timeToReduce){
     	this.leftTime -= timeToReduce;
     	if(leftTime == visitTime - 300){
@@ -36,6 +37,9 @@ public class Visitor {
     	}else if(leftTime == 0){
     		changeClothes(false);
     	}
+    	if(this.locker.checkEncounter()){
+            this.encounters++;
+        }
     }
     
     /**
@@ -43,7 +47,8 @@ public class Visitor {
      * @return	true if time is left, false if time is over
      */
     public Boolean isTimeLeft(){
-    	return (leftTime > 0);
+        System.out.println(leftTime);
+        return (leftTime > 0);
     }
     
     /**
@@ -89,5 +94,9 @@ public class Visitor {
     public void setLocker(Locker locker){
     	this.locker = locker;
     	changeClothes(true);
+    }
+
+    public Locker getLocker(){
+        return this.locker;
     }
 }

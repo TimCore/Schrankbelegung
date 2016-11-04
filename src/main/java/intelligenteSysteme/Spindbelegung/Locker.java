@@ -9,8 +9,8 @@ public class Locker {
 
     private boolean currentlyInUse = false;         // somebody currently uses the locker and changes (takes 5 minutes)
     private LinkedList<Locker> neighbours;  		// List of other Lockers next to this one
-    private int columnNumber = 0;
-    private int rowNumber = 0;
+    private int columnNumber;
+    private int rowNumber;
     private int visits;
 
 
@@ -61,5 +61,13 @@ public class Locker {
     
     public void setCurrentlyInUse(Boolean status){
     	this.currentlyInUse = status;
+    }
+
+    public int getColumnNumber(){
+        return this.columnNumber;
+    }
+
+    public int getRowNumber(){
+        return this.rowNumber;
     }
 }

@@ -49,33 +49,36 @@ public class Calculator {
         Logger.addLogFile(LoggingLevel.ENCOUNTER);
         Logger.log(LoggingLevel.SYSTEM,"Starte random alg");
         Logger.log(LoggingLevel.SYSTEM,System.nanoTime());
-        int time = Main.fullTime();
-        Logger.log(LoggingLevel.SYSTEM,"Zeit in stunden beträgt: "+time);
-        int id = 0;
+        int time=0;
+        int id;
         int localRandom;
-        while(time>0){
-            Logger.log(LoggingLevel.SYSTEM,"Checke random");
-            if(rndCheck()){
-                Logger.log(LoggingLevel.SYSTEM,"Erstelle Visitor mit id: "+id);
-                localRandom= this.random.nextInt(times.length);
-                Visitor visitor = new Visitor(times[localRandom], id);
-                Locker locker = chooseRandomLocker();
-                if(locker!=null) {
-                    Logger.log(LoggingLevel.SYSTEM,"Freien Locker gefunde für id: "+id);
-                    visitor.setLocker(locker);
-                    this.simulator.addVisitor(visitor);
-                    id += 1;
-                }else
-                    Logger.log(LoggingLevel.SYSTEM,"Keinen freien Locker gefunden für id: "+id);
+        for(int i=config.getSIMLUATION_REPEATS();i>0;i--) {
+            time=Main.fullTime();
+            Logger.log(LoggingLevel.SYSTEM,"Zeit in stunden beträgt: "+time);
+            id=0;
+            Logger.log(LoggingLevel.SYSTEM,"Tag: "+i);
+            while (time > 0) {
+                System.out.println("check");
+                if (rndCheck()) {
+                    Logger.log(LoggingLevel.SYSTEM, "Erstelle Visitor mit id: " + id);
+                    localRandom = this.random.nextInt(times.length);
+                    Visitor visitor = new Visitor(times[localRandom], id);
+                    Locker locker = chooseRandomLocker();
+                    if (locker != null) {
+                        Logger.log(LoggingLevel.SYSTEM, "Freien Locker gefunde für id: " + id);
+                        visitor.setLocker(locker);
+                        this.simulator.addVisitor(visitor);
+                        id += 1;
+                    } else
+                        Logger.log(LoggingLevel.SYSTEM, "Keinen freien Locker gefunden für id: " + id);
+                }
+                this.simulator.startSimulator();
+                //TODO keine magic number
+                time -= 10;
             }
-            this.simulator.startSimulator();
-            //TODO keine magic number
-            time-=10;
+            this.simulator.clearSimulator();
+            Logger.writeLogs();
         }
-        this.simulator.clearSimulator();
-
-        Logger.log(LoggingLevel.SYSTEM,"Random fertig");
-        Logger.log(LoggingLevel.SYSTEM,System.nanoTime());
     }
     
     /**
@@ -84,7 +87,6 @@ public class Calculator {
      */
     private boolean rndCheck(){
     	double rnd = Math.random();
-        Logger.log(LoggingLevel.SYSTEM,"Random war:"+rnd);
         //TODO keine magic number
         return rnd <= 0.1;
     }

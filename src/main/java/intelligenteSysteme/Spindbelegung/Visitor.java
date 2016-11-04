@@ -47,7 +47,6 @@ public class Visitor {
      * @return	true if time is left, false if time is over
      */
     public Boolean isTimeLeft(){
-        System.out.println(leftTime);
         return (leftTime > 0);
     }
     

@@ -63,6 +63,11 @@ public class Gym {
     	locker.setCurrentlyInUse(false);
     }
 
+    public void clearGym(){
+        freeLockers.addAll(usedLockers);
+        usedLockers.clear();
+    }
+
     /**
      * Sets the neighbours for each Locker TODO only for two rows yet
      */

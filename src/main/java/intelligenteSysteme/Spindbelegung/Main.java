@@ -19,6 +19,7 @@ public class Main {
     	if(args.length<1||args.length>1){
     	    throw new Exception("To few or to many argmunets");
         }
+        Logger.cleanLogFiles();
         Logger.addLogFile(LoggingLevel.SYSTEM);
         Logger.log(LoggingLevel.SYSTEM,System.nanoTime());
         JsonParser parser = new JsonParser();
@@ -35,7 +36,7 @@ public class Main {
         Logger.log(LoggingLevel.SYSTEM,System.nanoTime());
         Calculator  calculator = new Calculator(config);
         calculator.randomAlg();
-        Logger.writeLogs();
+        Logger.log(LoggingLevel.SYSTEM,System.nanoTime());
 
     }
 

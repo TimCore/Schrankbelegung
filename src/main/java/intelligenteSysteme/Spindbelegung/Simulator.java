@@ -51,6 +51,7 @@ public class Simulator {
 		});
 		visitors.clear();
 		encounters.forEach((key,value)-> Logger.log(LoggingLevel.ENCOUNTER,key+" "+value));
+		this.gym.clearGym();
 	}
 
 

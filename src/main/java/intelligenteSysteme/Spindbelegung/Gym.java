@@ -78,35 +78,48 @@ public class Gym {
     public void setNeighbours(){
         for(int i = 0; i<rows; i++){
             for(int j = 0; j<columns; j++) {
-                if(i==0 && j==0){                                        //upper left corner
-                    lockers[i][j+1].addNeighbour(lockers[i][j+1]);
-                    lockers[i+1][j].addNeighbour(lockers[i][j+1]);
-                    lockers[i+1][j+1].addNeighbour(lockers[i][j+1]);
-                }else if(i==columns-1 && j==0){                          //lower left corner
-                    lockers[i-1][j].addNeighbour(lockers[i][j+1]);
-                    lockers[i-1][j+1].addNeighbour(lockers[i][j+1]);
-                    lockers[i][j+1].addNeighbour(lockers[i][j+1]);
-                }else if(i==0 && j==rows-1){                             //upper right corner
-                    lockers[i][j-1].addNeighbour(lockers[i][j+1]);
-                    lockers[i+1][j].addNeighbour(lockers[i][j+1]);
-                    lockers[i+1][j-1].addNeighbour(lockers[i][j+1]);
-                }else if(i==columns-1 && j==rows-1){                     //lower right corner
-                    lockers[i-1][j].addNeighbour(lockers[i][j+1]);
-                    lockers[i-1][j-1].addNeighbour(lockers[i][j+1]);
-                    lockers[i][j-1].addNeighbour(lockers[i][j+1]);
-                }else if(i==0 && j>0 && j<rows-1){//upper row
-                    //TODO dieses und der nächste block sind gleich soll das so sein?
+                //Die beiden ecken oben wie unten
+                if(j==0||j==columns-1){
+                    if(i==0){
+                        if(j==0){
+                            //Obere linke ecke
+                            lockers[i][j].addNeighbour(lockers[i+1][j]);
+                            lockers[i][j].addNeighbour(lockers[i][j+1]);
+                            lockers[i][j].addNeighbour(lockers[i+1][j+1]);
+                        }else{
+                            //untere linke ecke
+                            lockers[i][j].addNeighbour(lockers[i+1][j-1]);
+                            lockers[i][j].addNeighbour(lockers[i][j-1]);
+                            lockers[i][j].addNeighbour(lockers[i+1][j]);
+                        }
+
+
+
+                    }else{
+                        if(j==0){
+                            //Obere rechte ecke
+                            lockers[i][j].addNeighbour(lockers[i-1][j]);
+                            lockers[i][j].addNeighbour(lockers[i][j+1]);
+                            lockers[i][j].addNeighbour(lockers[i-1][j+1]);
+                        }else{
+                            //untere rechte ecke
+                            lockers[i][j].addNeighbour(lockers[i-1][j]);
+                            lockers[i][j].addNeighbour(lockers[i][j+-1]);
+                            lockers[i][j].addNeighbour(lockers[i-1][j-11]);
+                        }
+                    }
+                }else if(i==1){
                     lockers[i][j].addNeighbour(lockers[i][j-1]);
+                    lockers[i][j].addNeighbour(lockers[i-1][j-1]);
+                    lockers[i][j].addNeighbour(lockers[i-1][j]);
+                    lockers[i][j].addNeighbour(lockers[i-1][j+1]);
                     lockers[i][j].addNeighbour(lockers[i][j+1]);
+                }else{
+                    lockers[i][j].addNeighbour(lockers[i][j-1]);
                     lockers[i][j].addNeighbour(lockers[i+1][j-1]);
                     lockers[i][j].addNeighbour(lockers[i+1][j]);
                     lockers[i][j].addNeighbour(lockers[i+1][j+1]);
-                }else if(i==columns-1 && j>0 && j<rows-1){               //lower row
-                    lockers[i][j].addNeighbour(lockers[i][j-1]);
                     lockers[i][j].addNeighbour(lockers[i][j+1]);
-                    lockers[i][j].addNeighbour(lockers[i+1][j-1]);
-                    lockers[i][j].addNeighbour(lockers[i+1][j]);
-                    lockers[i][j].addNeighbour(lockers[i+1][j+1]);
                 }
             }
         }

@@ -124,7 +124,7 @@ public class Calculator {
             while ((ln=reader.readLine())!=null){
                 multiTime=Integer.parseInt(ln.split(" ")[1]);
                 for(int i=0;i<multiTime;i++){
-                    localTimes[timeId]=Integer.parseInt(ln.split(" ")[0]);
+                    localTimes[timeId]=Integer.parseInt(ln.split(" ")[0])*60;
                     timeId++;
                 }
 

@@ -30,14 +30,23 @@ public class Visitor {
     //TODO wir müssen ändern wie gecheckt wird ob ein visitor grade eine begegnung hat und zwar wenn er am umziehen ist
     public void reduceTime(int timeToReduce){
     	this.leftTime -= timeToReduce;
-    	if(leftTime == visitTime - 300){
-    		changeClothes(false);
-    	}else if(leftTime == 300){
+
+    	if(leftTime <= 0){
+            changeClothes(false);
+        }else if(leftTime <= 1500){
     		changeClothes(true);
-    	}else if(leftTime == 0){
-    		changeClothes(false);
-    	}
-    	if(this.locker.checkEncounter()){
+            checkEncounters();
+    	}else if(leftTime <= visitTime - 1500) {
+            changeClothes(false);
+        }else if(leftTime >= visitTime -1500){
+            checkEncounters();
+            changeClothes(true);
+        }
+
+    }
+
+    private  void checkEncounters(){
+        if (this.locker.checkEncounter()){
             this.encounters++;
         }
     }

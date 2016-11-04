@@ -30,8 +30,8 @@ public class Calculator {
         this.gym= gym;
         this.config=config;
         this.random= new Random();
-        readIn(config.getPATH_TO_VISIORLIST());
-	}
+        this.times=readIn(config.getPATH_TO_VISIORLIST());
+    }
 	
 	
 
@@ -41,8 +41,10 @@ public class Calculator {
      */
     private Locker chooseRandomLocker(){
         if(this.gym.getFreeLockers().isEmpty()) return null;
-        List<Locker> locker = this.gym.getFreeLockers();
-        return locker.remove(this.random.nextInt(locker.size()));
+        List<Locker> lockerList = this.gym.getFreeLockers();
+        Locker locker= lockerList.remove(this.random.nextInt(lockerList.size()));
+        locker.setCurrentlyInUse(true);
+        return locker;
     }
 
     void randomAlg(){
@@ -62,8 +64,9 @@ public class Calculator {
                 if (rndCheck()) {
 
                     Logger.log(LoggingLevel.SYSTEM, "Erstelle Visitor mit id: " + id);
-                    localRandom = this.random.nextInt(times.length);
-                    Visitor visitor = new Visitor(times[localRandom], id);
+                    localRandom = this.random.nextInt(this.times.length);
+                    Visitor visitor = new Visitor(this.times[localRandom], id);
+                    Logger.log(LoggingLevel.SYSTEM,"Visitor hat die zeit: "+this.times[localRandom]);
                     Locker locker = chooseRandomLocker();
                     //Focusperson um 15:00 uhr
                     if(time>=Main.fullTime()-18000)
@@ -76,6 +79,7 @@ public class Calculator {
                     } else
                         Logger.log(LoggingLevel.SYSTEM, "Keinen freien Locker gefunden für id: " + id);
                 }
+                //Hier unten angesetzt weil wir ja beim ersten umziehen auch checken müssen
                 this.simulator.startSimulator();
                 //TODO keine magic number
                 time -= 10;
@@ -98,9 +102,9 @@ public class Calculator {
     /**
      * reads the .txt-file with the information about the durations of visits and saves it into {@link #times}
      * @param txt path to the "Belegungszeiten.txt"
-     * @return 2-dimensional int-array with int[duration][frequency]
+     * @return the times we need
      */
-    private void readIn(String txt){
+    private int[] readIn(String txt){
         try{
             Logger.log(LoggingLevel.SYSTEM,"Beginne lesen der Zeiten");
             Logger.log(LoggingLevel.SYSTEM,System.nanoTime());
@@ -108,25 +112,32 @@ public class Calculator {
             String ln;
             reader.readLine();
             int timeId=0;
-            String[] values;
+            int multiTime=0;
             while ((ln=reader.readLine())!=null){
                 timeId+=Integer.parseInt(ln.split(" ")[1]);
             }
             reader.close();
             reader = new BufferedReader(new FileReader(txt));
-            this.times= new int[timeId];
+            int[] localTimes= new int[timeId];
             timeId=0;
             reader.readLine();
             while ((ln=reader.readLine())!=null){
-                this.times[timeId]=Integer.parseInt(ln.split(" ")[1]);
+                multiTime=Integer.parseInt(ln.split(" ")[1]);
+                for(int i=0;i<multiTime;i++){
+                    localTimes[timeId]=Integer.parseInt(ln.split(" ")[0]);
+                    timeId++;
+                }
+
             }
             reader.close();
             Logger.log(LoggingLevel.SYSTEM,"Zeiten eingelesen");
             Logger.log(LoggingLevel.SYSTEM,System.nanoTime());
+            return localTimes;
         }catch (Exception e){
             System.out.println("File not found");
             e.printStackTrace();
         }
+        return null;
     }
 
 }

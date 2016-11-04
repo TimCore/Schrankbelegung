@@ -5,6 +5,7 @@ import intelligenteSysteme.Spindbelegung.logger.LoggingLevel;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -70,14 +71,20 @@ public class Simulator {
      */
     public void reduceTime(int value){
     	this.timeLeft -= value;
+		List<Visitor> noTimesLeft = new LinkedList<>();
     	for (Visitor v : visitors.values()){
-    		v.reduceTime(value);
     		if(!v.isTimeLeft()){
-    			encounters.put(v.getID(), v.getEncounters());
-				this.gym.freeLocker(v.getLocker());
-    			visitors.remove(v.getID());
+				noTimesLeft.add(v);
     		}
+			v.reduceTime(value);
     	}
+    	for (Visitor v : noTimesLeft){
+			visitors.remove(v.getID());
+			Logger.log(LoggingLevel.SYSTEM,"Visitor "+v.getID()+" verlässt das Gym");
+			encounters.put(v.getID(), v.getEncounters());
+			this.gym.freeLocker(v.getLocker());
+			visitors.remove(v.getID());
+		}
     }
 
 

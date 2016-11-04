@@ -37,10 +37,11 @@ public class Gym {
      * @param col   value of the column
      */
     public Locker choseLocker(int row, int col){
-    	freeLockers.remove(lockers[row][col]);
-    	usedLockers.add(lockers[row][col]);
-    	lockers[row][col].incVisits();
-        return lockers[row][col];
+        Locker locker = lockers[row][col];
+        locker.setCurrentlyInUse(true);
+    	freeLockers.remove(locker);
+    	usedLockers.add(locker);
+        return locker;
     }
 
     private void createLockers(){
@@ -65,6 +66,9 @@ public class Gym {
 
     public void clearGym(){
         freeLockers.addAll(usedLockers);
+        for (Locker l: freeLockers) {
+            l.setCurrentlyInUse(false);
+        }
         usedLockers.clear();
     }
 

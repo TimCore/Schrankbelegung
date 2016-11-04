@@ -19,3 +19,7 @@ hs_err_pid*
 /.settings/
 .project
 .classpath
+/src/main/resource/focus.txt
+/src/main/resource/encounters.txt
+/.gitignore
+/src/main/resource/system.txt

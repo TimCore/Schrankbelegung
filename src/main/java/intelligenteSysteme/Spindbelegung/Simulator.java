@@ -3,10 +3,9 @@ package intelligenteSysteme.Spindbelegung;
 import intelligenteSysteme.Spindbelegung.logger.Logger;
 import intelligenteSysteme.Spindbelegung.logger.LoggingLevel;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by Tc0r3 on 25.10.2016.
@@ -65,10 +64,12 @@ public class Simulator {
      */
     public void reduceTime(int value){
     	this.timeLeft -= value;
+		List<Integer> noTimeLeft = new LinkedList<>();
     	for (int key : visitors.keySet()) {
 			Visitor v = visitors.get(key);
 			if (!v.isTimeLeft()) {
-				visitors.remove(key);
+				noTimeLeft.add(v.getID());
+				visitors.put(key,null);
 				Logger.log(LoggingLevel.SYSTEM, "Visitor " + v.getID() + " verlässt das Gym");
 				Logger.log(LoggingLevel.ENCOUNTER, v.getID() + " " + v.getEncounters());
 				this.gym.freeLocker(v.getLocker());
@@ -76,10 +77,15 @@ public class Simulator {
 					focusEncounter += v.getEncounters();
 				}
 				continue;
+			}else{
+				v.reduceTime(value);
 			}
-			v.reduceTime(value);
+
 		}
-    }
+		for(int i : noTimeLeft){
+			visitors.remove(i);
+		}
+	}
 
 
     public  synchronized void addVisitor(Visitor visitor) {
@@ -94,5 +100,11 @@ public class Simulator {
 		this.focusID=id;
 	}
 
-    
+	public int getEncounters() {
+		return encounters;
+	}
+
+	public int getFocusEncounter() {
+		return focusEncounter;
+	}
 }

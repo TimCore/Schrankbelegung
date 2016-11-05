@@ -91,8 +91,11 @@ public class Calculator {
             }
             focusPersonInUse=false;
             this.simulator.clearSimulator();
+            Logger.log(LoggingLevel.SYSTEM,"Schreibe log");
             Logger.writeLogs();
         }
+        System.out.println(this.simulator.getEncounters()/1000);
+        System.out.println(this.simulator.getFocusEncounter()/10);
     }
     
     /**
@@ -113,7 +116,6 @@ public class Calculator {
     private int[] readIn(String txt){
         try{
             Logger.log(LoggingLevel.SYSTEM,"Beginne lesen der Zeiten");
-            Logger.log(LoggingLevel.SYSTEM,System.nanoTime());
             BufferedReader reader = new BufferedReader(new FileReader(txt));
             String ln;
             reader.readLine();
@@ -137,7 +139,6 @@ public class Calculator {
             }
             reader.close();
             Logger.log(LoggingLevel.SYSTEM,"Zeiten eingelesen");
-            Logger.log(LoggingLevel.SYSTEM,System.nanoTime());
             return localTimes;
         }catch (Exception e){
             System.out.println("File not found");

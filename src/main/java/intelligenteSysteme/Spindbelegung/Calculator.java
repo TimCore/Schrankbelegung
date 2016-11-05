@@ -20,7 +20,7 @@ public class Calculator {
     /**
      * The times from the txt fle
      */
-    private final int[] times;
+    private  int[] times;
 
 	public Calculator(Config config){
 	    //TODO Feste werte durch config ändern
@@ -30,7 +30,6 @@ public class Calculator {
         this.gym= gym;
         this.config=config;
         this.random= new Random();
-        this.times=readIn(config.getPATH_TO_VISIORLIST());
     }
 	
 	

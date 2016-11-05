@@ -47,6 +47,27 @@ public class Calculator {
         this.gym.addUsedLocker(locker);
         return locker;
     }
+    
+    /**
+     * Chooses a locker in the first row with Modulo 2 if possible. 
+     * If not, takes a locker Modulo 2 of the second row. 
+     * If the Columns (Modulo2) in both rows are occupied, a free locker will be choosen with random.  
+     * @return the new Locker choosen by the algorithm
+     */
+    private Locker chooseWithHoldingDistance(){							//TODO letzte Wahl der Spalte speichern um Laufzeit zu sparen?
+    	if(this.gym.getFreeLockers().isEmpty()) return null;
+    	for(int i = 0; i < config.getLOCKER_COLUMNS()-1; i++){
+    		if(this.gym.getFreeLockers().contains(this.gym.getLocker()[0][i])){
+        		return this.gym.getLocker()[0][i];
+        	}
+    	}
+    	for(int i = 0; i < config.getLOCKER_COLUMNS()-1; i++){
+    		if(this.gym.getFreeLockers().contains(this.gym.getLocker()[1][i])){
+    			return this.gym.getLocker()[1][i];
+    		}
+    	}
+    	return chooseRandomLocker();								
+    }
 
     void randomAlg(){
         Logger.addLogFile(LoggingLevel.ENCOUNTER);
@@ -69,7 +90,8 @@ public class Calculator {
                     localRandom = this.random.nextInt(this.times.length);
                     Visitor visitor = new Visitor(this.times[localRandom], id);
                     Logger.log(LoggingLevel.SYSTEM,"Visitor hat die zeit: "+this.times[localRandom]);
-                    Locker locker = chooseRandomLocker();
+                    Locker locker = chooseWithHoldingDistance();
+                    //Locker locker = chooseRandomLocker();
                     //Focusperson um 15:00 uhr
                     if(time<=Main.fullTime()-18000&&!focusPersonInUse) {
                         this.simulator.setFocusID(id);
@@ -91,11 +113,8 @@ public class Calculator {
             }
             focusPersonInUse=false;
             this.simulator.clearSimulator();
-            Logger.log(LoggingLevel.SYSTEM,"Schreibe log");
             Logger.writeLogs();
         }
-        System.out.println(this.simulator.getEncounters()/1000);
-        System.out.println(this.simulator.getFocusEncounter()/10);
     }
     
     /**
@@ -116,6 +135,7 @@ public class Calculator {
     private int[] readIn(String txt){
         try{
             Logger.log(LoggingLevel.SYSTEM,"Beginne lesen der Zeiten");
+            Logger.log(LoggingLevel.SYSTEM,System.nanoTime());
             BufferedReader reader = new BufferedReader(new FileReader(txt));
             String ln;
             reader.readLine();
@@ -139,6 +159,7 @@ public class Calculator {
             }
             reader.close();
             Logger.log(LoggingLevel.SYSTEM,"Zeiten eingelesen");
+            Logger.log(LoggingLevel.SYSTEM,System.nanoTime());
             return localTimes;
         }catch (Exception e){
             System.out.println("File not found");

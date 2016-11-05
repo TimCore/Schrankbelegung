@@ -30,6 +30,7 @@ public class Calculator {
         this.gym= gym;
         this.config=config;
         this.random= new Random();
+        this.times=readIn(config.getPATH_TO_VISIORLIST());
     }
 	
 	
@@ -155,7 +156,6 @@ public class Calculator {
             }
             reader.close();
             Logger.log(LoggingLevel.SYSTEM,"Zeiten eingelesen");
-            Logger.log(LoggingLevel.SYSTEM,System.nanoTime());
             return localTimes;
         }catch (Exception e){
             System.out.println("File not found");

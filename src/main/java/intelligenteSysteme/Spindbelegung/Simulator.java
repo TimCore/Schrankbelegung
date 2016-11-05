@@ -10,10 +10,8 @@ import java.util.*;
  */
 public class Simulator {
 
-    private int timeLeft;						//the amount of left time in seconds
     private final int skipTimeValue;					//the value in seconds for each timeskip
     private int focusID;        				//the id of the focused visitor
-    private int currentID;      				//the id of the next visitor
     private int encounters=0;	//Contains the visitorID and
 	private int focusEncounter=0;
     private final Map<Integer,Visitor> visitors;	//A List
@@ -26,8 +24,7 @@ public class Simulator {
     public Simulator(int timeLeft,Gym gym){
 		//TODO Magic number
 		this.skipTimeValue=10;
-    	this.timeLeft = timeLeft;
-		this.visitors= new HashMap<>();
+        this.visitors= new HashMap<>();
 		this.gym=gym;
     }
 
@@ -61,8 +58,7 @@ public class Simulator {
      * @param value	The time we want to reduce
      */
 	private void reduceTime(int value){
-    	this.timeLeft -= value;
-		List<Integer> noTimeLeft = new LinkedList<>();
+        List<Integer> noTimeLeft = new LinkedList<>();
     	for (int key : visitors.keySet()) {
 			Visitor v = visitors.get(key);
 			if (!v.isTimeLeft()) {
@@ -79,9 +75,7 @@ public class Simulator {
 			}
 
 		}
-		for(int i : noTimeLeft){
-			visitors.remove(i);
-		}
+        noTimeLeft.forEach(visitors::remove);
 	}
 
 

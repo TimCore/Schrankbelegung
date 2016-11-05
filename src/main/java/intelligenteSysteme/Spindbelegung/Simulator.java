@@ -17,7 +17,8 @@ public class Simulator {
     private int skipTimeValue;					//the value in seconds for each timeskip
     private int focusID;        				//the id of the focused visitor
     private int currentID;      				//the id of the next visitor
-    private Map<Integer, Integer> encounters;	//Contains the visitorID and 	
+    private int encounters=0;	//Contains the visitorID and
+	private int focusEncounter=0;
     private Map<Integer,Visitor> visitors;	//A List
 	private Gym gym;
 
@@ -29,7 +30,6 @@ public class Simulator {
 		//TODO Magic number
 		this.skipTimeValue=10;
     	this.timeLeft = timeLeft;
-    	this.encounters = new HashMap<>();
 		this.visitors= new HashMap<>();
 		this.gym=gym;
     }
@@ -47,15 +47,10 @@ public class Simulator {
 	 * Clears all entrys and set encounters
 	 */
 	public void clearSimulator() {
-		visitors.values().forEach(v-> encounters.put(v.getID(),v.getEncounters()));
-		visitors.clear();
-		encounters.forEach((key,value)->{
-			Logger.log(LoggingLevel.ENCOUNTER,key+" "+value);
-			if(key==focusID){
-				Logger.log(LoggingLevel.FOCUS,value);
-			}
-		});
-		encounters.clear();
+		for(Visitor v : visitors.values()){
+			Logger.log(LoggingLevel.ENCOUNTER,v.getID()+" "+v.getEncounters());
+			this.encounters+=v.getEncounters();
+		}
 		this.gym.clearGym();
 	}
 
@@ -70,19 +65,19 @@ public class Simulator {
      */
     public void reduceTime(int value){
     	this.timeLeft -= value;
-		List<Visitor> noTimesLeft = new LinkedList<>();
-    	for (Visitor v : visitors.values()){
-    		if(!v.isTimeLeft()){
-				noTimesLeft.add(v);
-    		}
+    	for (int key : visitors.keySet()) {
+			Visitor v = visitors.get(key);
+			if (!v.isTimeLeft()) {
+				visitors.remove(key);
+				Logger.log(LoggingLevel.SYSTEM, "Visitor " + v.getID() + " verlässt das Gym");
+				Logger.log(LoggingLevel.ENCOUNTER, v.getID() + " " + v.getEncounters());
+				this.gym.freeLocker(v.getLocker());
+				if (v.getID() == focusID) {
+					focusEncounter += v.getEncounters();
+				}
+				continue;
+			}
 			v.reduceTime(value);
-    	}
-    	for (Visitor v : noTimesLeft){
-			visitors.remove(v.getID());
-			Logger.log(LoggingLevel.SYSTEM,"Visitor "+v.getID()+" verlässt das Gym");
-			encounters.put(v.getID(), v.getEncounters());
-			this.gym.freeLocker(v.getLocker());
-			visitors.remove(v.getID());
 		}
     }
 

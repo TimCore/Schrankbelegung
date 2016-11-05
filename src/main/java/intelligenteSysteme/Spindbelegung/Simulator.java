@@ -4,8 +4,6 @@ import intelligenteSysteme.Spindbelegung.logger.Logger;
 import intelligenteSysteme.Spindbelegung.logger.LoggingLevel;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Created by Tc0r3 on 25.10.2016.
@@ -13,13 +11,13 @@ import java.util.stream.Stream;
 public class Simulator {
 
     private int timeLeft;						//the amount of left time in seconds
-    private int skipTimeValue;					//the value in seconds for each timeskip
+    private final int skipTimeValue;					//the value in seconds for each timeskip
     private int focusID;        				//the id of the focused visitor
     private int currentID;      				//the id of the next visitor
     private int encounters=0;	//Contains the visitorID and
 	private int focusEncounter=0;
-    private Map<Integer,Visitor> visitors;	//A List
-	private Gym gym;
+    private final Map<Integer,Visitor> visitors;	//A List
+	private final Gym gym;
 
     /**
      * Constructor
@@ -60,9 +58,9 @@ public class Simulator {
      * reduces the time by the given value for the Simluator and every active visitor until he has left time.
      * When the vistior's time reaches 0 his id and the number of encounters are added to the HashMap encounters. 
      * Subsequently removes the visitor from the List of visitors 
-     * @param value
+     * @param value	The time we want to reduce
      */
-    public void reduceTime(int value){
+	private void reduceTime(int value){
     	this.timeLeft -= value;
 		List<Integer> noTimeLeft = new LinkedList<>();
     	for (int key : visitors.keySet()) {
@@ -76,7 +74,6 @@ public class Simulator {
 				if (v.getID() == focusID) {
 					focusEncounter += v.getEncounters();
 				}
-				continue;
 			}else{
 				v.reduceTime(value);
 			}

@@ -7,12 +7,12 @@ import java.util.LinkedList;
  */
 public class Gym {
 
-    private int columns;         				//Number of lockers in a row
-    private int rows;           				//Number of rows with lockers
-    private int total;          		 		//Total number of lockers
-    private Locker[][] lockers;  				//All lockers
-    private LinkedList<Locker> usedLockers; 	//A Map containing references to all used Lockers
-    private LinkedList<Locker> freeLockers;	//A Map containing references to all free Lockers
+    private final int columns;         				//Number of lockers in a row
+    private final int rows;           				//Number of rows with lockers
+    private final int total;          		 		//Total number of lockers
+    private final Locker[][] lockers;  				//All lockers
+    private final LinkedList<Locker> usedLockers; 	//A Map containing references to all used Lockers
+    private final LinkedList<Locker> freeLockers;	//A Map containing references to all free Lockers
 
 
     /**
@@ -75,7 +75,7 @@ public class Gym {
     /**
      * Sets the neighbours for each Locker TODO only for two rows yet
      */
-    public void setNeighbours(){
+    private void setNeighbours(){
         for(int i = 0; i<rows; i++){
             for(int j = 0; j<columns; j++) {
                 //Die beiden ecken oben wie unten

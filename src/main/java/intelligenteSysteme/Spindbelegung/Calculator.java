@@ -12,15 +12,15 @@ import java.util.Random;
 
 public class Calculator {
 	
-	private Gym gym;
-	private  Simulator simulator;
+	private final Gym gym;
+	private final Simulator simulator;
     private Config config;
-    private Random random;
+    private final Random random;
 
     /**
      * The times from the txt fle
      */
-    private int[] times;
+    private final int[] times;
 
 	public Calculator(Config config){
 	    //TODO Feste werte durch config ändern
@@ -72,8 +72,7 @@ public class Calculator {
     void randomAlg(){
         Logger.addLogFile(LoggingLevel.ENCOUNTER);
         Logger.log(LoggingLevel.SYSTEM,"Starte random alg");
-        Logger.log(LoggingLevel.SYSTEM,System.nanoTime());
-        int time=0;
+        int time;
         int id;
         int localRandom;
         boolean focusPersonInUse=false;
@@ -122,9 +121,7 @@ public class Calculator {
      * @return	true if value below 0.1
      */
     private boolean rndCheck(){
-    	double rnd = Math.random();
-        //TODO keine magic number
-        return rnd <= 0.1;
+    	return  Math.random()<=0.1;
     }
 
     /**

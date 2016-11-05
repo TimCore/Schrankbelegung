@@ -18,7 +18,7 @@ public class Logger {
     /**
      * String for the Filename StrinBuilder to log the strings
      */
-    private static Map<LoggingLevel,StringBuilder> loggings = new HashMap<>();
+    private static final Map<LoggingLevel,StringBuilder> loggings = new HashMap<>();
 
     private static final String LOGFILEPATH= Paths.get("","src","main","resource").toAbsolutePath().toString();
 
@@ -38,7 +38,10 @@ public class Logger {
      * @param message   Which message we want to log
      */
     public static void log(LoggingLevel fileName,String message){
-        loggings.get(fileName).append(message).append("\n");
+        if(fileName==LoggingLevel.SYSTEM){
+            loggings.get(fileName).append(System.nanoTime()).append(" : ").append(message).append("\n");
+        }else
+            loggings.get(fileName).append(message).append("\n");
     }
 
     /**

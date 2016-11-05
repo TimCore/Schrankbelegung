@@ -21,8 +21,8 @@ public class Main {
         }
         Logger.cleanLogFiles();
         Logger.addLogFile(LoggingLevel.SYSTEM);
-        Logger.log(LoggingLevel.SYSTEM,System.nanoTime());
         Logger.addLogFile(LoggingLevel.FOCUS);
+        Logger.log(LoggingLevel.SYSTEM,"Statrte Programm");
         JsonParser parser = new JsonParser();
         JsonObject object = (JsonObject) parser.parse(new FileReader(args[0]));
         int row = object.get("locker_rows").getAsInt();
@@ -34,10 +34,8 @@ public class Main {
         String path = object.get("path_to_visitorlist").getAsString();
         config = new Config(row,col,lockers,closeTime,openTime,repeats,path);
         Logger.log(LoggingLevel.SYSTEM,"Config gelesen");
-        Logger.log(LoggingLevel.SYSTEM,System.nanoTime());
         Calculator  calculator = new Calculator(config);
         calculator.randomAlg();
-        Logger.log(LoggingLevel.SYSTEM,System.nanoTime());
 
     }
 

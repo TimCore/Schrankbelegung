@@ -6,9 +6,9 @@ package intelligenteSysteme.Spindbelegung;
 public class Visitor {
 
 
-    private int visitTime;          //The time this visitor will spend at the gym (current session)
+    private final int visitTime;          //The time this visitor will spend at the gym (current session)
     private int leftTime;			//The time until the visitor will leave the gym
-    private int id;					//The id of the visitor
+    private final int id;					//The id of the visitor
     private Locker locker;			//The locker which is used by the visitor
     /**
      * First encounter when entering the gym
@@ -67,9 +67,9 @@ public class Visitor {
     
     /**
      * Changes the status of the locker if the user starts changing or not
-     * @param status
+     * @param status wo what status we want to change
      */
-    public void changeClothes(Boolean status){
+    private void changeClothes(Boolean status){
         this.locker.setCurrentlyInUse(status);
 
     }
@@ -83,7 +83,7 @@ public class Visitor {
     
     /**
      * Returns the full time of the visit of the this visitor
-     * @return
+     * @return  The visited time
      */
     public int getVisitTime(){
         return this.visitTime;

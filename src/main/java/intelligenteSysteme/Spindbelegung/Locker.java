@@ -8,9 +8,9 @@ import java.util.LinkedList;
 public class Locker {
 
     private boolean currentlyInUse = false;         // somebody currently uses the locker and changes (takes 5 minutes)
-    private LinkedList<Locker> neighbours;  		// List of other Lockers next to this one
-    private int columnNumber;
-    private int rowNumber;
+    private final LinkedList<Locker> neighbours;  		// List of other Lockers next to this one
+    private final int columnNumber;
+    private final int rowNumber;
 
 
 
@@ -48,7 +48,7 @@ public class Locker {
 
 
     
-    public Boolean getCurrentlyInUse(){
+    private Boolean getCurrentlyInUse(){
     	return currentlyInUse; 
     }
     

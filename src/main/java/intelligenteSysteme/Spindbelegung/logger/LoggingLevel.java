@@ -1,7 +1,5 @@
 package intelligenteSysteme.Spindbelegung.logger;
 
-import java.nio.file.Path;
-
 /**
  * Created by sven on 03.11.16.
  */
@@ -27,11 +25,11 @@ public enum LoggingLevel {
     /**
      * Name of the LoggingLevel
      */
-    private String name;
+    private final String name;
     /**
      * Name of the Logging file
      */
-    private String logFileName;
+    private final String logFileName;
 
     LoggingLevel(String name, String logFilePath) {
         this.name = name;

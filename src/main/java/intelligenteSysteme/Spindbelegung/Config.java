@@ -5,13 +5,13 @@ package intelligenteSysteme.Spindbelegung;
  */
 public class Config {
 
-    private   int LOCKER_ROWS;
-    private  int LOCKER_COLUMNS;
-    private   int TOTAL_LOCKERS;
-    private  int GYM_OPEN_TIME;
-    private   int GYM_CLOSE_TIME;
-    private  int SIMLUATION_REPEATS;
-    private  String PATH_TO_VISIORLIST;
+    private final int LOCKER_ROWS;
+    private final int LOCKER_COLUMNS;
+    private final int TOTAL_LOCKERS;
+    private final int GYM_OPEN_TIME;
+    private final int GYM_CLOSE_TIME;
+    private final int SIMLUATION_REPEATS;
+    private final String PATH_TO_VISIORLIST;
 
     public Config(int LOCKER_ROWS,int LOCKER_COLUMNS,int
                   TOTAL_LOCKERS,int GYM_CLOSE_TIME,int GYM_OPEN_TIME,
@@ -32,10 +32,6 @@ public class Config {
 
     public int getLOCKER_COLUMNS() {
         return LOCKER_COLUMNS;
-    }
-
-    public int getTOTAL_LOCKERS() {
-        return TOTAL_LOCKERS;
     }
 
     public int getGYM_OPEN_TIME() {

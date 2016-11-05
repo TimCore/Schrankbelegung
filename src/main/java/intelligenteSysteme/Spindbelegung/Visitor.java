@@ -6,14 +6,31 @@ package intelligenteSysteme.Spindbelegung;
 public class Visitor {
 
 
-    private final int visitTime;          //The time this visitor will spend at the gym (current session)
-    private int leftTime;			//The time until the visitor will leave the gym
-    private final int id;					//The id of the visitor
-    private Locker locker;			//The locker which is used by the visitor
+	/**
+	 * The time this visitor will spend at the gym (current session)
+	 */
+    private final int visitTime;
+    
+    /**
+     * The time until the visitor will leave the gym
+     */
+    private int leftTime;
+    
+    /**
+     * The id of the visitor
+     */
+    private final int id;
+    
+    /**
+     * The locker which is used by the visitor
+     */
+    private Locker locker;
+    
     /**
      * First encounter when entering the gym
      */
     private short firstEncounter=0;
+    
     /**
      * Second encounter when leaving the gym
      */
@@ -111,6 +128,10 @@ public class Visitor {
     	changeClothes(true);
     }
 
+    /**
+     * returns the locker of the visitor
+     * @return the used locker
+     */
     public Locker getLocker(){
         return this.locker;
     }

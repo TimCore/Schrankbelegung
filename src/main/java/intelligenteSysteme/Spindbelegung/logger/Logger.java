@@ -16,16 +16,19 @@ import java.util.stream.Stream;
 public class Logger {
 
     /**
-     * String for the Filename StrinBuilder to log the strings
+     * String for the Filename StringBuilder to log the strings
      */
     private static final Map<LoggingLevel,StringBuilder> loggings = new HashMap<>();
 
-    private static final String LOGFILEPATH= Paths.get("","src","main","resource").toAbsolutePath().toString();
+    /**
+     * The Path of the logfile
+     */
+    private static final String LOGFILEPATH = Paths.get("","src","main","resource").toAbsolutePath().toString();
 
 
 
     /**
-     * Adds an logfile
+     * Adds a logfile
      * @param fileName  Name of the logfile
      */
     public static void addLogFile(LoggingLevel fileName){
@@ -33,9 +36,9 @@ public class Logger {
     }
 
     /**
-     * Log the message in the cache of this file
-     * @param fileName  Which filelogger we want to use
-     * @param message   Which message we want to log
+     * Logs the message in the cache of this file
+     * @param fileName  The filelogger we want to use
+     * @param message   The message we want to log
      */
     public static void log(LoggingLevel fileName,String message){
         if(fileName==LoggingLevel.SYSTEM){
@@ -45,9 +48,9 @@ public class Logger {
     }
 
     /**
-     * Log the message in the cache of this file
-     * @param fileName  Which filelogger we want to use
-     * @param message   Which message we want to log
+     * Logs the message in the cache of this file
+     * @param fileName  The filelogger we want to use
+     * @param message   The message we want to log
      */
     public static void log(LoggingLevel fileName,boolean message){
         loggings.get(fileName).append(message).append("\n");
@@ -55,8 +58,8 @@ public class Logger {
 
     /**
      * Log the message in the cache of this file
-     * @param fileName  Which filelogger we want to use
-     * @param message   Which message we want to log
+     * @param fileName  The filelogger we want to use
+     * @param message   The message we want to log
      */
     public static void log(LoggingLevel fileName,long message){
         loggings.get(fileName).append(message).append("\n");
@@ -64,8 +67,8 @@ public class Logger {
 
     /**
      * Log the message in the cache of this file
-     * @param fileName  Which filelogger we want to use
-     * @param message   Which message we want to log
+     * @param fileName  The filelogger we want to use
+     * @param message   The message we want to log
      */
     public static void log(LoggingLevel fileName,int message){
         loggings.get(fileName).append(message).append("\n");
@@ -73,15 +76,15 @@ public class Logger {
 
     /**
      * Log the message in the cache of this file
-     * @param fileName  Which filelogger we want to use
-     * @param message   Which message we want to log
+     * @param fileName  The filelogger we want to use
+     * @param message   The message we want to log
      */
     public static void log(LoggingLevel fileName,char message){
         loggings.get(fileName).append(message).append("\n");
     }
 
     /**
-     * Write all files in the given filenames by creating new ones
+     * Writes all files in the given filenames by creating new ones
      */
     public static void writeLogs(){
         loggings.forEach((key,value)->{

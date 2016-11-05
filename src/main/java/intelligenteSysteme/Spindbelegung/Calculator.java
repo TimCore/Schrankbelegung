@@ -1,7 +1,5 @@
 package intelligenteSysteme.Spindbelegung;
 
-
-
 import intelligenteSysteme.Spindbelegung.logger.Logger;
 import intelligenteSysteme.Spindbelegung.logger.LoggingLevel;
 
@@ -12,28 +10,45 @@ import java.util.Random;
 
 public class Calculator {
 	
+	/**
+	 * The gym contains all lockers 
+	 */
 	private final Gym gym;
+	
+	/**
+	 * The Simulator, used to start the simulation
+	 */
 	private final Simulator simulator;
+	
+	/**
+	 * The Config file, contains information about opening times, the number of repeats, 
+	 * the size of the lockers and the path of the txt-file containing data about the times 
+	 */
     private Config config;
+    
+    /**
+     * A Random to get random positions
+     */
     private final Random random;
 
     /**
-     * The times from the txt fle
+     * Contains the times of the file "Belegungszeiten.txt"
      */
     private  int[] times;
 
+    /**
+     * Constructor
+     * @param config	config-file contains the data for the simulation
+     */
 	public Calculator(Config config){
-	    //TODO Feste werte durch config ändern
-        this.config=config;
+        this.config = config;
         Gym gym = new Gym(config.getLOCKER_ROWS(),config.getLOCKER_COLUMNS());
-        this.simulator= new Simulator(Main.fullTime(),gym);
-        this.gym= gym;
-        this.config=config;
-        this.random= new Random();
-        this.times=readIn(config.getPATH_TO_VISIORLIST());
+        this.simulator = new Simulator(Main.fullTime(),gym);
+        this.gym = gym;
+        this.config = config;
+        this.random = new Random();
+        this.times = readIn(config.getPATH_TO_VISIORLIST());
     }
-	
-	
 
     /**
      * returns a free random locker. Tries again if occupied 
@@ -69,7 +84,10 @@ public class Calculator {
     	return chooseRandomLocker();								
     }
 
-    void randomAlg(){
+    /**
+     * 
+     */
+    void randomAlg(){								//TODO Gucken ob anderer name besser passt, seit ncoht random sondern chooseWithHoldingDistance() aufgerufen wird
         Logger.addLogFile(LoggingLevel.ENCOUNTER);
         Logger.log(LoggingLevel.SYSTEM,"Starte random alg");
         int time;
@@ -152,7 +170,6 @@ public class Calculator {
                     localTimes[timeId]=Integer.parseInt(ln.split(" ")[0])*60;
                     timeId++;
                 }
-
             }
             reader.close();
             Logger.log(LoggingLevel.SYSTEM,"Zeiten eingelesen");

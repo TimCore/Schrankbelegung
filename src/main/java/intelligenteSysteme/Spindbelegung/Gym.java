@@ -7,12 +7,35 @@ import java.util.LinkedList;
  */
 public class Gym {
 
-    private final int columns;         				//Number of lockers in a row
-    private final int rows;           				//Number of rows with lockers
-    private final int total;          		 		//Total number of lockers
-    private final Locker[][] lockers;  				//All lockers
-    private final LinkedList<Locker> usedLockers; 	//A Map containing references to all used Lockers
-    private final LinkedList<Locker> freeLockers;	//A Map containing references to all free Lockers
+	/**
+	 * Number of lockers in a row
+	 */
+    private final int columns;
+    
+    /**
+     * Number of rows with lockers
+     */
+    private final int rows;     
+    
+    /**
+     * Total number of lockers
+     */
+    private final int total;          	
+    
+    /**
+     * All lockers
+     */
+    private final Locker[][] lockers;  
+    
+    /**
+     * A Map containing references to all used Lockers
+     */
+    private final LinkedList<Locker> usedLockers;
+    
+    /**
+     * A Map containing references to all free Lockers
+     */
+    private final LinkedList<Locker> freeLockers;
 
 
     /**
@@ -44,6 +67,9 @@ public class Gym {
         return locker;
     }
 
+    /**
+     * Initializes the array of lockers and adds each locker to the list of free lockers
+     */
     private void createLockers(){
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
@@ -64,6 +90,9 @@ public class Gym {
     	locker.setCurrentlyInUse(false);
     }
 
+    /**
+     * takes all used lockers, resets them and adds them to the list of free lockers
+     */
     public void clearGym(){
         freeLockers.addAll(usedLockers);
         for (Locker l: freeLockers) {
@@ -92,9 +121,6 @@ public class Gym {
                             lockers[i][j].addNeighbour(lockers[i][j-1]);
                             lockers[i][j].addNeighbour(lockers[i+1][j]);
                         }
-
-
-
                     }else{
                         if(j==0){
                             //Obere rechte ecke
@@ -160,6 +186,10 @@ public class Gym {
     	return this.freeLockers;
     }
 
+    /**
+     * Adds the given locker to the list of used Lockers
+     * @param locker	the locker to be added to the list of used lockers
+     */
     public void addUsedLocker(Locker locker){
         this.usedLockers.add(locker);
     }

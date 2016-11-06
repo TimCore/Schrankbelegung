@@ -35,6 +35,8 @@ public class Calculator {
      * Contains the times of the file "Belegungszeiten.txt"
      */
     private  int[] times;
+    
+    private int lastIndexInArray;
 
     /**
      * Constructor

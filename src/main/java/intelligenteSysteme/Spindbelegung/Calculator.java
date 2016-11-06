@@ -60,9 +60,8 @@ public class Calculator {
         if(this.gym.getFreeLockers().isEmpty()) return null;
         List<Locker> lockerList = this.gym.getFreeLockers();
         Locker locker= lockerList.remove(this.random.nextInt(lockerList.size()));
-        locker.setCurrentlyInUse(true);
-        this.gym.addUsedLocker(locker);
-        return locker;
+        return this.gym.choseLocker(locker.getRowNumber(),locker.getColumnNumber());
+
     }
     
     /**

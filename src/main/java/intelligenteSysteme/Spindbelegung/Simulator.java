@@ -42,6 +42,7 @@ public class Simulator {
      * The gym, contains all lockers
      */
 	private final Gym gym;
+	
 	/**
 	 * Counting all visitors
 	 */
@@ -51,9 +52,9 @@ public class Simulator {
     /**
      * Constructor
 	 */
-    public Simulator(Gym gym){
+    public Simulator(int skipTimeValue, Gym gym){
 		//TODO Magic number
-		this.skipTimeValue=10;
+		this.skipTimeValue=skipTimeValue;
         this.visitors= new HashMap<>();
 		this.gym=gym;
     }

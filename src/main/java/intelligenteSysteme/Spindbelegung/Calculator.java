@@ -45,9 +45,8 @@ public class Calculator {
 	public Calculator(Config config){
         this.config = config;
         Gym gym = new Gym(config.getLOCKER_ROWS(),config.getLOCKER_COLUMNS());
-        this.simulator = new Simulator(gym);
+        this.simulator = new Simulator(config.getTIME_SKIP_VALUE(), gym);
         this.gym = gym;
-        this.config = config;
         this.random = new Random();
         this.times = readIn(config.getPATH_TO_VISIORLIST());
     }

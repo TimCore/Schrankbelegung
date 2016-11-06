@@ -33,8 +33,9 @@ public class Main {
         int openTime = object.get("gym_open_time").getAsInt();
         int closeTime = object.get("gym_close_time").getAsInt();
         int repeats = object.get("simulation_reapeats").getAsInt();
+        int timeSkipValue = object.get("time_skip_value").getAsInt();
         String path = object.get("path_to_visitorlist").getAsString();
-        config = new Config(row,col,lockers,closeTime,openTime,repeats,path);
+        config = new Config(row,col,lockers,closeTime,openTime,repeats,timeSkipValue,path);
         Logger.log(LoggingLevel.SYSTEM,"Config gelesen");
         Calculator  calculator = new Calculator(config);
         calculator.randomAlg();

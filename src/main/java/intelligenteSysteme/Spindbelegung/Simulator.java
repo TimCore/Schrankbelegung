@@ -130,7 +130,7 @@ public class Simulator {
      * @param visitor	visitor to be removed
      * @return	the removed Visitor
      */
-	private  Visitor removeVisitor(Visitor visitor){	//TODO Gucken ob Rueckgabetyp Visitor notwendig
+	private  Visitor removeVisitor(Visitor visitor){
 		return this.visitors.remove(visitor.getID());
 	}
 

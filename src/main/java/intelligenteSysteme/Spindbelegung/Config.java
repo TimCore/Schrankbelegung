@@ -70,30 +70,51 @@ public class Config {
 
     }
 
+    /**
+     * returns the value of rows
+     */
     public int getLOCKER_ROWS() {
         return LOCKER_ROWS;
     }
 
+    /**
+     * returns the value of columns
+     */
     public int getLOCKER_COLUMNS() {
         return LOCKER_COLUMNS;
     }
 
+    /**
+     * returns the value of the opening time
+     */
     public int getGYM_OPEN_TIME() {
         return GYM_OPEN_TIME;
     }
 
+    /**
+     * returns the value of the closing time
+     */
     public int getGYM_CLOSE_TIME() {
         return GYM_CLOSE_TIME;
     }
 
+    /**
+     * returns the value of repeats
+     */
     public int getSIMLUATION_REPEATS() {
         return SIMLUATION_REPEATS;
     }
     
+    /**
+     * returns the value of the time skip value
+     */
     public int getTIME_SKIP_VALUE(){
     	return this.TIME_SKIP_VALUE;
     }
 
+    /**
+     * returns the path to the visitorlist
+     */
     public String getPATH_TO_VISIORLIST() {
         return PATH_TO_VISIORLIST;
     }

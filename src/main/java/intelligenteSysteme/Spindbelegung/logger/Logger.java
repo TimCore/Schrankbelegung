@@ -25,8 +25,6 @@ public class Logger {
      */
     private static final String LOGFILEPATH = Paths.get("","src","main","resource").toAbsolutePath().toString();
 
-
-
     /**
      * Adds a logfile
      * @param fileName  Name of the logfile

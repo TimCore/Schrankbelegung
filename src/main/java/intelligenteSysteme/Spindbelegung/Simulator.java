@@ -100,7 +100,6 @@ public class Simulator {
 				this.gym.freeLocker(v.getLocker());
 				if (v.getID() == focusID) {
 					focusEncounter += v.getEncounters();
-					System.out.println(v.getID());
 					Logger.log(LoggingLevel.FOCUS,v.getID()+" "+v.getEncounters());
 				}
 			}else{

@@ -8,6 +8,9 @@ import java.io.FileReader;
 import java.util.List;
 import java.util.Random;
 
+/**
+ *	The Calculator gets all important values from the config-file and contains the algorithms for the simulation 
+ */
 public class Calculator {
 	
 	/**

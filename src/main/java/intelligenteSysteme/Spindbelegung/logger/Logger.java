@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 /**
- * Created by sven on 03.11.16.
+ * The Logger is used to save the data to files.
  */
 public class Logger {
 

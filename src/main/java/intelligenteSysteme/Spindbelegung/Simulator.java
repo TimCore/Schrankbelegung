@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Tc0r3 on 25.10.2016.
+ * The Simulator is used to run the simulation and manage the important values for it.  
  */
 public class Simulator {
 
@@ -53,7 +53,6 @@ public class Simulator {
      * Constructor
 	 */
     public Simulator(int skipTimeValue, Gym gym){
-		//TODO Magic number
 		this.skipTimeValue=skipTimeValue;
         this.visitors= new HashMap<>();
 		this.gym=gym;

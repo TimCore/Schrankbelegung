@@ -1,7 +1,7 @@
 package intelligenteSysteme.Spindbelegung;
 
 /**
- * Created by Tc0r3 on 21.10.2016.
+ * The Visitor. Contains information about his id, the time he will stay and his encounters.
  */
 public class Visitor {
 
@@ -69,11 +69,9 @@ public class Visitor {
                 }
             }
         }else changeClothes(false);
-
     }
 
 
-    
     /**
      * Checks if the visitor will stay or leave
      * @return	true if time is left, false if time is over

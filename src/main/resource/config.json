@@ -4,7 +4,7 @@
   "total_lockers":150,
   "gym_open_time":10,
   "gym_close_time":22,
-  "simulation_reapeats":100,
+  "simulation_reapeats":10,
   "time_skip_value":10,
   "path_to_visitorlist":"D:/Workbenches etc/iSys/Spindbelegung/documents/Belegungszeiten.txt"
 }

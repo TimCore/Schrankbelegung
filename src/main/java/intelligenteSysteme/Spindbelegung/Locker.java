@@ -3,7 +3,7 @@ package intelligenteSysteme.Spindbelegung;
 import java.util.LinkedList;
 
 /**
- * Created by Tc0r3 on 19.10.2016.
+ * Simulates a locker which can be used by visitors. 
  */
 public class Locker {
 

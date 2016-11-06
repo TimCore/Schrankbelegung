@@ -3,7 +3,7 @@ package intelligenteSysteme.Spindbelegung;
 import java.util.LinkedList;
 
 /**
- * Created by Tc0r3 on 19.10.2016.
+ * The Gym contains the lockers and is used to manage them. 
  */
 public class Gym {
 

@@ -36,7 +36,7 @@ public class Calculator {
      */
     private  int[] times;
     
-    private int lastIndexInArray;
+    //private int lastIndexInArray = 0;
 
     /**
      * Constructor
@@ -71,22 +71,17 @@ public class Calculator {
      * If the Columns (Modulo2) in both rows are occupied, a free locker will be choosen with random.  
      * @return the new Locker choosen by the algorithm
      */
-    private Locker chooseWithHoldingDistance(){							//TODO letzte Wahl der Spalte speichern um Laufzeit zu sparen?
-    	if(this.gym.getFreeLockers().isEmpty()) return null;
+    private Locker chooseWithHoldingDistance(){
     	for(int i = 0; i < config.getLOCKER_COLUMNS()-1; i+=2){
-    		if(this.gym.getFreeLockers().contains(this.gym.getLocker()[0][i])){
-    			Locker l = this.gym.getFreeLockers().remove(this.gym.getFreeLockers().indexOf(this.gym.getLocker()[0][i]));
-    			this.gym.getUsedLockers().add(l);
-    			l.setCurrentlyInUse(true);
-    			return l;
+    		if(!this.gym.getLocker()[0][i].getOccupied()){
+    			return this.gym.choseLocker(0, i);
         	}
     	}
     	for(int i = 0; i < config.getLOCKER_COLUMNS()-1; i+=2){
-    		if(this.gym.getFreeLockers().contains(this.gym.getLocker()[1][i])){
-    			Locker l = this.gym.getFreeLockers().remove(this.gym.getFreeLockers().indexOf(this.gym.getLocker()[1][i]));
-    			this.gym.getUsedLockers().add(l);
-    			l.setCurrentlyInUse(true);
-    			return l;
+    		if(!this.gym.getLocker()[1][i].getOccupied()){
+    			if(!this.gym.getLocker()[0][i].getCurrentlyInUse()){
+    				return this.gym.choseLocker(1, i);
+    			}
     		}
     	}
     	return chooseRandomLocker();								
@@ -115,9 +110,8 @@ public class Calculator {
                     localRandom = this.random.nextInt(this.times.length);
                     Visitor visitor = new Visitor(this.times[localRandom], id);
                     Logger.log(LoggingLevel.SYSTEM,"Visitor hat die zeit: "+this.times[localRandom]);
-                    //Locker locker = chooseWithHoldingDistance();
-
-                    Locker locker = chooseRandomLocker();
+                    Locker locker = chooseWithHoldingDistance();
+                    //Locker locker = chooseRandomLocker();
                     //Focusperson um 15:00 uhr
                     if(time<=Main.fullTime()-18000&&!focusPersonInUse) {
                         System.out.println("Fokus: "+id);

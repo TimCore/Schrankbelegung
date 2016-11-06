@@ -13,6 +13,11 @@ public class Locker {
     private boolean currentlyInUse = false;
     
     /**
+     * shows if the locker is actually occupied
+     */
+    private boolean occupied = false;
+    
+    /**
      * List of other Lockers next to this one
      */
     private final LinkedList<Locker> neighbours;
@@ -60,7 +65,7 @@ public class Locker {
      * Checks if this locker is currently in use
      * @return	true if in use, else false
      */
-    private Boolean getCurrentlyInUse(){
+    public Boolean getCurrentlyInUse(){
     	return currentlyInUse; 
     }
     
@@ -70,6 +75,22 @@ public class Locker {
      */
     public void setCurrentlyInUse(Boolean status){
     	this.currentlyInUse = status;
+    }
+    
+    /**
+     * Sets the status if this locker is actually occupied and not free for new visitors
+     * @param status	occupied or not
+     */
+    public void setOccupied(Boolean status){
+    	this.occupied = status;
+    }
+    
+    /**
+     * Tells if the locker is occupied or not
+     * @return true if occupied, else false
+     */
+    public Boolean getOccupied(){
+    	return this.occupied;
     }
 
     /**

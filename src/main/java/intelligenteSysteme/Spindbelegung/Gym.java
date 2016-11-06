@@ -62,6 +62,7 @@ public class Gym {
     public Locker choseLocker(int row, int col){
         Locker locker = lockers[row][col];
         locker.setCurrentlyInUse(true);
+        locker.setOccupied(true);
     	freeLockers.remove(locker);
     	usedLockers.add(locker);
         return locker;
@@ -88,6 +89,7 @@ public class Gym {
     	freeLockers.add(locker);
     	usedLockers.remove(locker);
     	locker.setCurrentlyInUse(false);
+    	locker.setOccupied(false);
     }
 
     /**

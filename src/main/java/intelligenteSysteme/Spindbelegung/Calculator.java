@@ -89,7 +89,7 @@ public class Calculator {
     /**
      * 
      */
-    void randomAlg(){								//TODO Gucken ob anderer name besser passt, seit ncoht random sondern chooseWithHoldingDistance() aufgerufen wird
+    void randomAlg(){
         Logger.addLogFile(LoggingLevel.ENCOUNTER);
         Logger.log(LoggingLevel.SYSTEM,"Starte random alg");
         int time;

@@ -73,7 +73,9 @@ public class Calculator {
     private Locker chooseWithHoldingDistance(){
     	for(int i = 0; i < config.getLOCKER_COLUMNS()-1; i+=2){
     		if(!this.gym.getLocker()[0][i].getOccupied()){
-    			return this.gym.choseLocker(0, i);
+    			if(!this.gym.getLocker()[1][i].getCurrentlyInUse()){
+    				return this.gym.choseLocker(0, i);
+    			}
         	}
     	}
     	for(int i = 0; i < config.getLOCKER_COLUMNS()-1; i+=2){

@@ -42,12 +42,16 @@ public class Simulator {
      * The gym, contains all lockers
      */
 	private final Gym gym;
+	/**
+	 * Counting all visitors
+	 */
+	private int visitorCounter=0;
+
 
     /**
      * Constructor
-     * @param timeLeft	The left time for this simulation
-     */
-    public Simulator(int timeLeft,Gym gym){
+	 */
+    public Simulator(Gym gym){
 		//TODO Magic number
 		this.skipTimeValue=10;
         this.visitors= new HashMap<>();
@@ -109,16 +113,25 @@ public class Simulator {
 	 * Adds a visitor to the list of visitors
 	 * @param visitor	The Visitor to be added
 	 */
-    public  synchronized void addVisitor(Visitor visitor) {
+    public   void addVisitor(Visitor visitor) {
 		this.visitors.put(visitor.getID(),visitor);
+		this.visitorCounter+=1;
 	}
 
-    /**
+	/**
+	 * Get the amount of visitors
+	 * @return	amount of visitors
+	 */
+	public int getVisitorCounter() {
+		return visitorCounter;
+	}
+
+	/**
      * Used to remove a visitor from the list of visitors
      * @param visitor	visitor to be removed
      * @return	the removed Visitor
      */
-	private synchronized Visitor removeVisitor(Visitor visitor){	//TODO Gucken ob Rueckgabetyp Visitor notwendig
+	private  Visitor removeVisitor(Visitor visitor){	//TODO Gucken ob Rueckgabetyp Visitor notwendig
 		return this.visitors.remove(visitor.getID());
 	}
 

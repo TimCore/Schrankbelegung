@@ -45,7 +45,7 @@ public class Calculator {
 	public Calculator(Config config){
         this.config = config;
         Gym gym = new Gym(config.getLOCKER_ROWS(),config.getLOCKER_COLUMNS());
-        this.simulator = new Simulator(Main.fullTime(),gym);
+        this.simulator = new Simulator(gym);
         this.gym = gym;
         this.config = config;
         this.random = new Random();
@@ -109,8 +109,8 @@ public class Calculator {
                     localRandom = this.random.nextInt(this.times.length);
                     Visitor visitor = new Visitor(this.times[localRandom], id);
                     Logger.log(LoggingLevel.SYSTEM,"Visitor hat die zeit: "+this.times[localRandom]);
-                    Locker locker = chooseWithHoldingDistance();
-                    //Locker locker = chooseRandomLocker();
+                    //Locker locker = chooseWithHoldingDistance();
+                    Locker locker = chooseRandomLocker();
                     //Focusperson um 15:00 uhr
                     if(time<=Main.fullTime()-18000&&!focusPersonInUse) {
                         //System.out.println("Fokus: "+id);
@@ -137,6 +137,7 @@ public class Calculator {
         }
         System.out.println(this.simulator.getFocusEncounter());
         System.out.println(this.simulator.getEncounters());
+        System.out.println(this.simulator.getVisitorCounter());
     }
     
     /**
@@ -144,7 +145,7 @@ public class Calculator {
      * @return	true if value below 0.1
      */
     private boolean rndCheck(){
-    	return  Math.random()<=0.2;
+    	return  Math.random()<=0.1;
     }
 
     /**

@@ -47,7 +47,7 @@ public class Locker {
     /**
      *  Checks if a neighbour-locker is currently used. Returns true if an encounter occures, else false if no neighbour is currently in use
      */
-    public Boolean checkEncounter(){
+    public boolean checkEncounter(){
     	for(Locker l : neighbours){
             if(l.getCurrentlyInUse()){
                 return true;

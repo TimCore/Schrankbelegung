@@ -113,10 +113,12 @@ public class Calculator {
                     localRandom = this.random.nextInt(this.times.length);
                     Visitor visitor = new Visitor(this.times[localRandom], id);
                     Logger.log(LoggingLevel.SYSTEM,"Visitor hat die zeit: "+this.times[localRandom]);
-                    Locker locker = chooseWithHoldingDistance();
-                    //Locker locker = chooseRandomLocker();
+                    //Locker locker = chooseWithHoldingDistance();
+
+                    Locker locker = chooseRandomLocker();
                     //Focusperson um 15:00 uhr
                     if(time<=Main.fullTime()-18000&&!focusPersonInUse) {
+                        System.out.println("Fokus: "+id);
                         this.simulator.setFocusID(id);
                         Logger.log(LoggingLevel.SYSTEM, "Fokusperson ist: " + id);
                         focusPersonInUse=true;
@@ -156,7 +158,6 @@ public class Calculator {
     private int[] readIn(String txt){
         try{
             Logger.log(LoggingLevel.SYSTEM,"Beginne lesen der Zeiten");
-            Logger.log(LoggingLevel.SYSTEM,System.nanoTime());
             BufferedReader reader = new BufferedReader(new FileReader(txt));
             String ln;
             reader.readLine();

@@ -110,7 +110,7 @@ public class Logger {
         Stream.of(LoggingLevel.values()).forEach(level->{
             Path filePath = getPathForEnum(level);
             try (FileWriter writer = new FileWriter(filePath.toString())) {
-                writer.write("");
+                writer.write(" ");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -132,12 +132,17 @@ public class Logger {
     private static void createLogFiles(){
         Stream.of(LoggingLevel.values()).forEach(level->{
             Path filePath = getPathForEnum(level);
-            if(!Files.exists(filePath)){
+            if(Files.exists(filePath)){
                 try {
-                    Files.createFile(filePath);
+                    Files.delete(filePath);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+            try {
+                Files.createFile(filePath);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
     }

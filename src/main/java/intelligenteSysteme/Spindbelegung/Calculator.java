@@ -71,14 +71,20 @@ public class Calculator {
      */
     private Locker chooseWithHoldingDistance(){							//TODO letzte Wahl der Spalte speichern um Laufzeit zu sparen?
     	if(this.gym.getFreeLockers().isEmpty()) return null;
-    	for(int i = 0; i < config.getLOCKER_COLUMNS()-1; i++){
+    	for(int i = 0; i < config.getLOCKER_COLUMNS()-1; i+=2){
     		if(this.gym.getFreeLockers().contains(this.gym.getLocker()[0][i])){
-        		return this.gym.getLocker()[0][i];
+    			Locker l = this.gym.getFreeLockers().remove(this.gym.getFreeLockers().indexOf(this.gym.getLocker()[0][i]));
+    			this.gym.getUsedLockers().add(l);
+    			l.setCurrentlyInUse(true);
+    			return l;
         	}
     	}
-    	for(int i = 0; i < config.getLOCKER_COLUMNS()-1; i++){
+    	for(int i = 0; i < config.getLOCKER_COLUMNS()-1; i+=2){
     		if(this.gym.getFreeLockers().contains(this.gym.getLocker()[1][i])){
-    			return this.gym.getLocker()[1][i];
+    			Locker l = this.gym.getFreeLockers().remove(this.gym.getFreeLockers().indexOf(this.gym.getLocker()[1][i]));
+    			this.gym.getUsedLockers().add(l);
+    			l.setCurrentlyInUse(true);
+    			return l;
     		}
     	}
     	return chooseRandomLocker();								

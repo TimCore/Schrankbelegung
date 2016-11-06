@@ -84,7 +84,7 @@ public class Calculator {
     			}
     		}
     	}
-    	return chooseRandomLocker();								
+    	return chooseRandomLocker();
     }
 
     /**
@@ -100,7 +100,7 @@ public class Calculator {
         for(int i=config.getSIMLUATION_REPEATS();i>0;i--) {
             time=Main.fullTime();
             Logger.log(LoggingLevel.SYSTEM,"Zeit in stunden beträgt: "+time);
-            id=0;
+            id=1;
             Logger.log(LoggingLevel.SYSTEM,"Tag: "+i);
             Logger.log(LoggingLevel.SYSTEM,"--------------------------------");
             while (time > 0) {
@@ -114,7 +114,7 @@ public class Calculator {
                     //Locker locker = chooseRandomLocker();
                     //Focusperson um 15:00 uhr
                     if(time<=Main.fullTime()-18000&&!focusPersonInUse) {
-                        System.out.println("Fokus: "+id);
+                        //System.out.println("Fokus: "+id);
                         this.simulator.setFocusID(id);
                         Logger.log(LoggingLevel.SYSTEM, "Fokusperson ist: " + id);
                         focusPersonInUse=true;
@@ -136,6 +136,8 @@ public class Calculator {
             this.simulator.clearSimulator();
             Logger.writeLogs();
         }
+        System.out.println(this.simulator.getFocusEncounter());
+        System.out.println(this.simulator.getEncounters());
     }
     
     /**
@@ -143,7 +145,7 @@ public class Calculator {
      * @return	true if value below 0.1
      */
     private boolean rndCheck(){
-    	return  Math.random()<=0.1;
+    	return  Math.random()<=0.2;
     }
 
     /**

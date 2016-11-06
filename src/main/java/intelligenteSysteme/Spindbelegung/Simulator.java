@@ -3,7 +3,10 @@ package intelligenteSysteme.Spindbelegung;
 import intelligenteSysteme.Spindbelegung.logger.Logger;
 import intelligenteSysteme.Spindbelegung.logger.LoggingLevel;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Tc0r3 on 25.10.2016.
@@ -64,6 +67,11 @@ public class Simulator {
 	public void clearSimulator() {
 		for(Visitor v : visitors.values()){
 			Logger.log(LoggingLevel.ENCOUNTER,v.getID()+" "+v.getEncounters());
+			if(v.getID()==focusID){
+				System.out.println(v.getID());
+				Logger.log(LoggingLevel.FOCUS,v.getID()+" "+v.getEncounters());
+				this.focusEncounter+=v.getEncounters();
+			}
 			this.encounters+=v.getEncounters();
 		}
 		this.gym.clearGym();
@@ -87,6 +95,8 @@ public class Simulator {
 				this.gym.freeLocker(v.getLocker());
 				if (v.getID() == focusID) {
 					focusEncounter += v.getEncounters();
+					System.out.println(v.getID());
+					Logger.log(LoggingLevel.FOCUS,v.getID()+" "+v.getEncounters());
 				}
 			}else{
 				v.reduceTime(value);
